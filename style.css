@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap')  
+
+*{ font-family: "Montserrat", sans-serif;} 
+body{
+  padding-top:50px;
+}
+h1{
+    font-size:48px;
+     background: -webkit-linear-gradient(45deg, #2211ff, #00ff95 80%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+        margin: 5px;
+
+  }
+@media screen and (max-width: 600px) {
+  #brandWordMark {
+    display: none;
+  }
+}
+#navBar {
+  background-color: var(--md-sys-color-secondary-container);
+  position: absolute;
+  overflow: hidden;
+  top: 5px;
+  width: calc(100vw + 5px);
+  border-radius: 0%;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  padding: 5px;
+  left: -5px;
+}
+#navBarOptions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-content: center;
+  justify-content: flex-end;
+  height: 100%;
+  font-size:18px;
+  flex: auto;
+}
+.navBarOption {
+  margin-right: 15px;
+  margin-left: 15px;
+}
+#logomarkContainer {
+  width: 45px;
+  height: 45px !important;
+  margin-right: 15px;
+}
+#logoBar {
+  display: flex;
+  flex-direction: row;
+}
+#logomark {
+  width:100%;
+  height: 100%;
+}
+
+#brandWordMark {
+  font-family: "MontserratAlt1", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 28px;
+  color: var(--md-sys-color-on-secondary-container);
+}
+
+  .sectionBlock {
+    background-color: #1F2937;
+    color: white;
+      text-align: center;
+      padding: 20px;  
+    width: calc(100% - 20px);
+margin-left:2px;
+    
+
+  }
+#tuneInButton {
+      background-color: var(--md-sys-color-primary-container);
+    color: var(--md-sys-color-primary);
+    font-weight: bolder;
+    padding: 5px;
+    text-decoration: none;
+    border-radius: 10px;
+    font-size: 28px;
+}
+#copyrightText {
+      position: absolute;
+    bottom: 5px;
+}
