@@ -1,14 +1,11 @@
 body {
-  font-family: "Montserrat", sans-serif;
+  font-family: "Montserrat", serif;
   margin-top: 75px;
-  /* Ensure a consistent color for body text if not explicitly set elsewhere */
-  color: var(--md-sys-color-on-background);
 }
 
 img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Ensures images cover their container without distortion */
 }
 
 h2 {
@@ -18,121 +15,122 @@ h2 {
 .substationUIHeader {
   display: flex;
   flex-direction: row;
-  align-items: center; /* Align items vertically */
-  padding: 0 10px; /* Add some horizontal padding */
+  align-items: center; /* Align items vertically in the header */
+  margin-bottom: 20px; /* Add some space below the header */
 }
 
 #substationList {
-  position: relative;
-  width: calc(100% - 20px); /* Adjust width to account for padding */
-  height: auto; /* Allow height to adjust based on content */
+  width: 100%; /* Use 100% width for better responsiveness */
   padding: 10px;
-  display: flex;
-  flex-wrap: wrap; /* Allow items to wrap to the next line */
-  gap: 20px; /* Add space between substation containers */
-  justify-content: center; /* Center items horizontally */
-  overflow-x: auto; /* Enable horizontal scrolling if needed */
-  -webkit-overflow-scrolling: touch; /* Smooth scrolling for touch devices */
+  display: grid; /* Use CSS Grid for a modern card layout */
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Responsive columns */
+  gap: 20px; /* Space between grid items */
+  overflow-x: hidden; /* Prevent horizontal overflow for the list itself */
+  justify-content: center; /* Center the grid items if there's extra space */
+  box-sizing: border-box; /* Include padding in the element's total width and height */
 }
 
 .substationContainer {
-  width: 300px; /* Adjusted width for better fit and less awkwardness */
-  height: auto; /* Allow height to adjust to content */
-  background-color: var(--md-sys-color-surface-container-low); /* Modern, subtle background */
-  color: var(--md-sys-color-on-surface); /* Text color on the surface */
+  background-color: var(--md-sys-color-on-surface);
+  color: var(--md-sys-color-surface);
   display: flex;
-  flex-direction: column; /* Stack content vertically */
-  position: relative;
-  padding: 20px; /* Increased padding for better spacing */
+  flex-direction: column; /* Stack content vertically within the card */
+  padding: 20px; /* Increase padding for better visual spacing */
   border-radius: 12px; /* Rounded corners for a modern look */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  overflow: hidden; /* Hide overflowing content */
-  transition: transform 0.2s ease-in-out; /* Smooth hover effect */
+  overflow: hidden; /* Hide overflowing text by default, use ellipsis for titles */
+  position: relative; /* For positioning the tuneInButton */
+  min-height: 180px; /* Ensure a minimum height for consistent cards */
+  justify-content: space-between; /* Push content to top and button to bottom */
 }
 
-.substationContainer:hover {
-  transform: translateY(-5px); /* Lift card slightly on hover */
+.substationContainer div {
+  margin-bottom: 10px; /* Add space between elements inside the card */
 }
 
 .substationTitle {
   font-weight: bold;
   font-size: 20px; /* Slightly larger title */
-  margin-bottom: 8px; /* Space below title */
-  color: var(--md-sys-color-primary); /* Use primary color for titles */
+  white-space: nowrap; /* Prevent title from wrapping */
+  overflow: hidden; /* Hide overflowing text */
+  text-overflow: ellipsis; /* Add ellipsis for overflowing titles */
+  margin-bottom: 5px; /* Less space below title */
 }
 
 .substationDescription {
-  font-size: 16px; /* Slightly smaller for better readability */
-  flex-grow: 1; /* Allow description to take available space */
-  margin-bottom: 15px; /* Space before the button */
-  line-height: 1.5; /* Improve readability of text */
+  font-size: 16px; /* Slightly smaller description for better hierarchy */
+  line-height: 1.4; /* Improve readability */
+  flex-grow: 1; /* Allow description to take up available space */
   overflow: hidden; /* Hide overflowing text */
-  text-overflow: ellipsis; /* Add ellipsis for overflowed text */
-  display: -webkit-box;
+  text-overflow: ellipsis; /* Add ellipsis for overflowing descriptions if needed */
+  display: -webkit-box; /* For multi-line ellipsis */
   -webkit-line-clamp: 3; /* Limit description to 3 lines */
   -webkit-box-orient: vertical;
 }
 
-.substationContainer div {
-  margin: 0; /* Reset default margin */
-}
-
-.substationLogoContainer,
-.substationLogo {
+.substationLogoContainer {
   width: 60px; /* Slightly larger logo */
   height: 60px;
-  border-radius: 8px; /* Slightly rounded logo */
-  margin-bottom: 15px; /* Space below logo */
+  border-radius: 50%; /* Make logo circular */
+  overflow: hidden;
+  margin-bottom: 15px; /* Add space below the logo */
+}
+
+.substationLogo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensure logo covers its container without distortion */
 }
 
 .grayedOut {
-  opacity: 0.5; /* Reduced opacity for grayed out elements */
-  pointer-events: none; /* Disable interaction when grayed out */
+  opacity: 0.6; /* Slightly less opaque for better visibility */
+  filter: grayscale(80%); /* Make it more visually distinct when grayed out */
 }
 
 .tuneInButton {
   display: flex;
   justify-content: center;
-  align-items: center;
-  position: relative; /* Changed to relative so it flows with content */
-  width: 100%; /* Full width within the container */
-  height: 50px; /* Slightly taller button */
-  background-color: var(--md-sys-color-primary); /* Use primary color for the button */
-  color: var(--md-sys-color-on-primary); /* Text color for the primary button */
+  align-items: center; /* Center both icon and text */
+  gap: 10px; /* Space between icon and text */
+  height: 50px; /* Taller button for easier interaction */
+  width: calc(100% - 40px); /* Adjust width to account for card padding */
+  background-color: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-primary);
   border-radius: 8px; /* Rounded corners for the button */
+  position: absolute; /* Position relative to .substationContainer */
+  bottom: 20px; /* Consistent spacing from the bottom of the card */
+  left: 20px; /* Consistent spacing from the left of the card */
+  right: 20px; /* Consistent spacing from the right of the card */
+  cursor: pointer; /* Indicate it's clickable */
   font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
-  margin-top: auto; /* Pushes the button to the bottom of the flex container */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  text-transform: uppercase; /* Modern touch for button text */
+  transition: background-color 0.2s ease-in-out; /* Smooth hover effect */
 }
 
 .tuneInButton:hover {
-  background-color: var(--md-sys-color-primary-container); /* Darker shade on hover */
-  transform: translateY(-2px); /* Slight lift on hover */
+  background-color: color-mix(in srgb, var(--md-sys-color-primary-container) 80%, black); /* Darken on hover */
 }
 
 #tuneInButtonIcon {
-  font-size: 28px; /* Adjusted icon size */
-  margin-right: 10px; /* Space between icon and text */
+  font-size: 28px; /* Adjust icon size to be more balanced with text */
 }
 
 #tuneInButtonText {
-  font-size: 18px; /* Adjusted text size for clarity */
+  font-size: 18px; /* Adjust text size for better readability */
 }
 
 #navBar {
-  background-color: var(--md-sys-color-surface-container); /* A more modern neutral for nav bar */
-  position: fixed; /* Changed to fixed for consistent positioning */
-  top: 0; /* Position at the very top */
+  background-color: var(--md-sys-color-secondary-container);
+  position: fixed; /* Use fixed for a sticky navigation bar */
+  top: 0; /* Align to the very top */
   left: 0;
   width: 100vw; /* Full viewport width */
   height: 60px; /* Slightly taller nav bar */
   display: flex;
   flex-direction: row;
-  align-items: center; /* Vertically align items */
+  align-items: center; /* Vertically center content */
   padding: 0 20px; /* Add horizontal padding */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
   z-index: 1000; /* Ensure nav bar is on top */
 }
 
@@ -146,126 +144,179 @@ h2 {
 }
 
 .navBarOption {
-  margin-right: 20px; /* Increased spacing between options */
-  margin-left: 20px;
-  color: var(--md-sys-color-on-surface); /* Consistent color for nav options */
+  margin-right: 20px; /* Increase spacing between nav options */
+  margin-left: 0; /* Remove left margin as flexbox handles spacing */
+  color: var(--md-sys-color-on-secondary-container); /* Use appropriate color from MD system */
   text-decoration: none; /* Remove underline from links */
-  font-weight: 500; /* Slightly bolder text */
-  transition: color 0.2s ease-in-out;
+  font-weight: 500;
+  transition: color 0.2s ease-in-out; /* Smooth hover effect */
+}
+
+.navBarOption:last-child {
+  margin-right: 0; /* No right margin for the last item */
 }
 
 .navBarOption:hover {
-  color: var(--md-sys-color-primary); /* Highlight on hover */
+  color: var(--md-sys-color-primary); /* Change color on hover */
 }
 
 #logomarkContainer {
-  width: 40px; /* Slightly larger logomark */
+  width: 40px; /* Slightly larger logo mark */
   height: 40px !important;
-  margin-right: 10px;
+  margin-right: 10px; /* Increase space between logomark and wordmark */
 }
 
 #logoBar {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: center; /* Align logo and wordmark */
 }
 
 #brandWordMark {
   font-family: "MontserratAlt1", sans-serif;
-  font-weight: 700; /* Bolder wordmark */
-  font-size: 24px; /* Adjusted font size */
-  color: var(--md-sys-color-primary); /* Use primary color for branding */
+  font-weight: 400;
+  font-style: normal;
+  font-size: 24px; /* Adjust size for better balance */
+  color: var(--md-sys-color-on-secondary-container); /* Use appropriate color */
 }
 
 #nowPlayingUI {
-  position: fixed; /* Fixed position for the now playing bar */
-  bottom: 0; /* At the very bottom */
+  position: fixed; /* Fixed to the bottom */
+  bottom: 0;
   left: 0;
-  width: 100%; /* Full width */
-  height: 120px; /* Adjusted height for better layout */
-  background-color: var(--md-sys-color-inverse-surface); /* A contrasting color for the now playing bar */
-  color: var(--md-sys-color-inverse-on-surface); /* Text color on inverse surface */
+  width: 100vw; /* Full viewport width */
+  height: 100px; /* Adjust height for a more compact player */
+  background-color: var(--md-sys-color-secondary-container);
+  color: var(--md-sys-color-secondary);
   display: flex;
   flex-direction: column;
   justify-content: center; /* Center content vertically */
-  align-items: flex-start; /* Align items to the start horizontally */
-  padding: 0 20px; /* Horizontal padding */
+  align-items: center; /* Center content horizontally */
+  padding: 0 20px 10px; /* Adjust padding for better look */
   box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1); /* Shadow at the top */
-  z-index: 999; /* Below nav bar */
+  z-index: 999; /* Below the nav bar */
 }
 
 #trackInfoContainer {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: center; /* Center track info */
   width: 100%;
-  color: var(--md-sys-color-inverse-on-surface);
-  align-items: flex-start;
+  color: var(--md-sys-color-secondary);
+  margin-top: 5px; /* Reduced top margin */
 }
 
 #trackName {
-  font-size: 24px; /* Adjusted font size */
-  color: var(--md-sys-color-inverse-primary); /* Use inverse primary for track name */
+  font-size: 24px; /* Slightly smaller for balance */
+  color: var(--md-sys-color-primary);
   font-weight: bold;
-  margin-bottom: 5px; /* Space below track name */
-  white-space: nowrap; /* Prevent text wrapping */
-  overflow: hidden; /* Hide overflowing text */
-  text-overflow: ellipsis; /* Add ellipsis for overflowed text */
-}
-
-#trackAuthor {
-  font-size: 18px; /* Adjusted font size */
-  font-style: italic;
-  margin-bottom: 10px; /* Space below author */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  max-width: 90%; /* Prevent overflow on smaller screens */
+}
+
+#trackAuthor {
+  font-size: 18px; /* Slightly smaller */
+  font-style: italic;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 90%; /* Prevent overflow on smaller screens */
 }
 
 #trackPositionInfo {
-  width: 100%;
+  width: calc(100% - 40px); /* Account for padding */
+  margin-top: 10px; /* Space above progress bar */
 }
 
 #trackProgressMeter {
   width: 100%;
-  height: 6px; /* Thinner progress bar */
-  -webkit-appearance: none; /* Remove default browser styling */
+  height: 8px; /* Thicker progress bar */
   appearance: none;
-  border-radius: 3px; /* Rounded ends */
-  background-color: rgba(255, 255, 255, 0.3); /* Lighter background for progress bar */
+  border-radius: 5px; /* Rounded progress bar */
+  overflow: hidden; /* Hide overflow for rounded corners */
 }
 
 progress[value]::-webkit-progress-bar {
-  background-color: rgba(255, 255, 255, 0.3); /* Lighter background for progress bar */
-  border-radius: 3px;
+  background-color: rgba(var(--md-sys-color-secondary-rgb), 0.3); /* Lighter background for the bar */
 }
 
 progress[value]::-webkit-progress-value {
-  transition: width 1s linear; /* Smooth transition */
-  background: var(--md-sys-color-inverse-primary); /* Use inverse primary for progress */
-  border-radius: 3px;
+  background: var(--md-sys-color-secondary);
+  border-radius: 5px; /* Keep value rounded */
+  transition: width 1s ease-in-out; /* Smoother transition */
 }
 
 progress[value]::-moz-progress-bar {
-  background: var(--md-sys-color-inverse-primary);
-  border-radius: 3px;
+  background: var(--md-sys-color-secondary);
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;700&display=swap"); /* Import for Montserrat Alt 1 */
 
-/* Universal box-sizing for easier layout */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
+/* Global font setting for consistency */
+* {
+  font-family: "Montserrat", sans-serif;
+  box-sizing: border-box; /* Ensure padding and border are included in element's total width and height */
 }
 
 #copyrightText {
-  position: fixed; /* Fixed position */
-  bottom: 10px; /* From the bottom */
-  left: 20px; /* From the left */
-  font-size: 12px;
-  color: var(--md-sys-color-on-surface-variant); /* More subtle color */
-  z-index: 1; /* Ensure it's visible */
+  position: absolute;
+  bottom: 5px;
+  width: 100%; /* Ensure it spans the width */
+  text-align: center; /* Center the copyright text */
+  font-size: 12px; /* Smaller font size */
+  color: rgba(var(--md-sys-color-on-surface-rgb), 0.7); /* Slightly muted color */
+}
+
+/* Ensure body padding accounts for fixed navBar and nowPlayingUI */
+body {
+  padding-top: 60px; /* Height of #navBar */
+  padding-bottom: 100px; /* Height of #nowPlayingUI */
+  margin: 0; /* Remove default body margin */
+}
+
+@media (max-width: 768px) {
+  #navBar {
+    height: 50px; /* Smaller nav bar on mobile */
+  }
+
+  body {
+    padding-top: 50px;
+  }
+
+  .tuneInButton {
+    height: 45px;
+  }
+
+  #tuneInButtonIcon {
+    font-size: 24px;
+  }
+
+  #tuneInButtonText {
+    font-size: 16px;
+  }
+
+  #nowPlayingUI {
+    height: 80px; /* Smaller player on mobile */
+    padding-bottom: 5px; /* Adjust padding */
+  }
+
+  #trackName {
+    font-size: 20px;
+  }
+
+  #trackAuthor {
+    font-size: 16px;
+  }
+
+  #substationList {
+    grid-template-columns: 1fr; /* Single column on small screens */
+    padding: 10px;
+  }
+
+  .substationContainer {
+    width: auto; /* Allow cards to take full width */
+    margin: 0 10px; /* Add side margins */
+  }
 }
