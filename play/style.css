@@ -1,172 +1,271 @@
 body {
-  font-family: "Montserrat", serif;
+  font-family: "Montserrat", sans-serif;
   margin-top: 75px;
+  /* Ensure a consistent color for body text if not explicitly set elsewhere */
+  color: var(--md-sys-color-on-background);
 }
+
 img {
   width: 100%;
   height: 100%;
+  object-fit: cover; /* Ensures images cover their container without distortion */
 }
+
 h2 {
   margin: 5px;
 }
+
 .substationUIHeader {
   display: flex;
-    flex-direction: row;
+  flex-direction: row;
+  align-items: center; /* Align items vertically */
+  padding: 0 10px; /* Add some horizontal padding */
 }
+
 #substationList {
   position: relative;
-  width: calc(100% - 15px);
-  height: 300px;
+  width: calc(100% - 20px); /* Adjust width to account for padding */
+  height: auto; /* Allow height to adjust based on content */
   padding: 10px;
-  display:flex;
-      flex-direction: row;
-}
-.substationContainer {
-     width: 350px;
-    height: 200px;
-     background-color: var(--md-sys-color-on-surface);
-      color: var(--md-sys-color-surface);
   display: flex;
-  position: relative;
-  padding: 10px;
-  margin: 10px;
+  flex-wrap: wrap; /* Allow items to wrap to the next line */
+  gap: 20px; /* Add space between substation containers */
+  justify-content: center; /* Center items horizontally */
+  overflow-x: auto; /* Enable horizontal scrolling if needed */
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling for touch devices */
 }
+
+.substationContainer {
+  width: 300px; /* Adjusted width for better fit and less awkwardness */
+  height: auto; /* Allow height to adjust to content */
+  background-color: var(--md-sys-color-surface-container-low); /* Modern, subtle background */
+  color: var(--md-sys-color-on-surface); /* Text color on the surface */
+  display: flex;
+  flex-direction: column; /* Stack content vertically */
+  position: relative;
+  padding: 20px; /* Increased padding for better spacing */
+  border-radius: 12px; /* Rounded corners for a modern look */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  overflow: hidden; /* Hide overflowing content */
+  transition: transform 0.2s ease-in-out; /* Smooth hover effect */
+}
+
+.substationContainer:hover {
+  transform: translateY(-5px); /* Lift card slightly on hover */
+}
+
 .substationTitle {
   font-weight: bold;
+  font-size: 20px; /* Slightly larger title */
+  margin-bottom: 8px; /* Space below title */
+  color: var(--md-sys-color-primary); /* Use primary color for titles */
 }
+
 .substationDescription {
-  font-size: 18px;
+  font-size: 16px; /* Slightly smaller for better readability */
+  flex-grow: 1; /* Allow description to take available space */
+  margin-bottom: 15px; /* Space before the button */
+  line-height: 1.5; /* Improve readability of text */
+  overflow: hidden; /* Hide overflowing text */
+  text-overflow: ellipsis; /* Add ellipsis for overflowed text */
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Limit description to 3 lines */
+  -webkit-box-orient: vertical;
 }
 
 .substationContainer div {
-  margin: 5px;
+  margin: 0; /* Reset default margin */
 }
+
 .substationLogoContainer,
 .substationLogo {
-  width: 50px;
-  height: 50px;
+  width: 60px; /* Slightly larger logo */
+  height: 60px;
+  border-radius: 8px; /* Slightly rounded logo */
+  margin-bottom: 15px; /* Space below logo */
 }
-.grayedOut {
-  opacity: 70%;
-}
-.tuneInButton {
-        display: flex;
-    justify-content: center;
-    align-content: center;
-    align-items: center;
-    bottom: 5px;
-    position: absolute;
-    height: 40px;
-    width: 230px;
-    background-color: var(--md-sys-color-primary-container);
-    color: var(--md-sys-color-primary);
-    flex-direction: row;
 
+.grayedOut {
+  opacity: 0.5; /* Reduced opacity for grayed out elements */
+  pointer-events: none; /* Disable interaction when grayed out */
 }
+
+.tuneInButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative; /* Changed to relative so it flows with content */
+  width: 100%; /* Full width within the container */
+  height: 50px; /* Slightly taller button */
+  background-color: var(--md-sys-color-primary); /* Use primary color for the button */
+  color: var(--md-sys-color-on-primary); /* Text color for the primary button */
+  border-radius: 8px; /* Rounded corners for the button */
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+  margin-top: auto; /* Pushes the button to the bottom of the flex container */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.tuneInButton:hover {
+  background-color: var(--md-sys-color-primary-container); /* Darker shade on hover */
+  transform: translateY(-2px); /* Slight lift on hover */
+}
+
 #tuneInButtonIcon {
-  font-size: 68px;
-  font-weight: bold;
+  font-size: 28px; /* Adjusted icon size */
+  margin-right: 10px; /* Space between icon and text */
 }
+
 #tuneInButtonText {
-  font-size: 32px;
-  font-weight: bold;
+  font-size: 18px; /* Adjusted text size for clarity */
 }
+
 #navBar {
-  background-color: var(--md-sys-color-secondary-container);
-  position: absolute;
-  overflow: hidden;
-  top: 5px;
-  width: calc(100vw + 5px);
-  border-radius: 0%;
-  height: 50px;
+  background-color: var(--md-sys-color-surface-container); /* A more modern neutral for nav bar */
+  position: fixed; /* Changed to fixed for consistent positioning */
+  top: 0; /* Position at the very top */
+  left: 0;
+  width: 100vw; /* Full viewport width */
+  height: 60px; /* Slightly taller nav bar */
   display: flex;
   flex-direction: row;
-  padding: 5px;
-  left: -5px;
+  align-items: center; /* Vertically align items */
+  padding: 0 20px; /* Add horizontal padding */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+  z-index: 1000; /* Ensure nav bar is on top */
 }
+
 #navBarOptions {
   display: flex;
   flex-direction: row;
   align-items: center;
-  align-content: center;
   justify-content: flex-end;
   height: 100%;
   flex: auto;
 }
+
 .navBarOption {
-  margin-right: 15px;
-  margin-left: 15px;
+  margin-right: 20px; /* Increased spacing between options */
+  margin-left: 20px;
+  color: var(--md-sys-color-on-surface); /* Consistent color for nav options */
+  text-decoration: none; /* Remove underline from links */
+  font-weight: 500; /* Slightly bolder text */
+  transition: color 0.2s ease-in-out;
 }
+
+.navBarOption:hover {
+  color: var(--md-sys-color-primary); /* Highlight on hover */
+}
+
 #logomarkContainer {
-  width: 35px;
-  height: 35px !important;
-  margin-right: 5px;
+  width: 40px; /* Slightly larger logomark */
+  height: 40px !important;
+  margin-right: 10px;
 }
+
 #logoBar {
   display: flex;
   flex-direction: row;
+  align-items: center;
 }
 
 #brandWordMark {
   font-family: "MontserratAlt1", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  font-size: 28px;
+  font-weight: 700; /* Bolder wordmark */
+  font-size: 24px; /* Adjusted font size */
+  color: var(--md-sys-color-primary); /* Use primary color for branding */
 }
+
 #nowPlayingUI {
-  position: absolute;
-  bottom: 20px;
+  position: fixed; /* Fixed position for the now playing bar */
+  bottom: 0; /* At the very bottom */
+  left: 0;
+  width: 100%; /* Full width */
+  height: 120px; /* Adjusted height for better layout */
+  background-color: var(--md-sys-color-inverse-surface); /* A contrasting color for the now playing bar */
+  color: var(--md-sys-color-inverse-on-surface); /* Text color on inverse surface */
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-bottom: 10px;
-  margin-top: 60px;
-  align-content: center;
-  width: calc(100% - 20px);
-  height: 170px;
-  background-color: var(--md-sys-color-secondary-container);
-  color: var(--md-sys-color-secondary);
+  justify-content: center; /* Center content vertically */
+  align-items: flex-start; /* Align items to the start horizontally */
+  padding: 0 20px; /* Horizontal padding */
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1); /* Shadow at the top */
+  z-index: 999; /* Below nav bar */
 }
+
 #trackInfoContainer {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  margin-top: 20px;
-  align-content: center;
-  width: calc(100%);
-  color: var(--md-sys-color-secondary);
+  justify-content: center;
+  width: 100%;
+  color: var(--md-sys-color-inverse-on-surface);
   align-items: flex-start;
 }
+
 #trackName {
-  font-size: 28px;
-  color: var(--md-sys-color-primary);
+  font-size: 24px; /* Adjusted font size */
+  color: var(--md-sys-color-inverse-primary); /* Use inverse primary for track name */
   font-weight: bold;
+  margin-bottom: 5px; /* Space below track name */
+  white-space: nowrap; /* Prevent text wrapping */
+  overflow: hidden; /* Hide overflowing text */
+  text-overflow: ellipsis; /* Add ellipsis for overflowed text */
 }
+
 #trackAuthor {
-  font-size: 22px;
+  font-size: 18px; /* Adjusted font size */
   font-style: italic;
+  margin-bottom: 10px; /* Space below author */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
+
 #trackPositionInfo {
   width: 100%;
 }
+
 #trackProgressMeter {
   width: 100%;
-  margin-bottom: 10px;
-}
-progress[value]::-webkit-progress-value {
-  transition: width 1s;
-  background: var(--md-sys-color-secondary);
-}
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap") * {
-  font-family: "Montserrat", sans-serif;
+  height: 6px; /* Thinner progress bar */
+  -webkit-appearance: none; /* Remove default browser styling */
+  appearance: none;
+  border-radius: 3px; /* Rounded ends */
+  background-color: rgba(255, 255, 255, 0.3); /* Lighter background for progress bar */
 }
 
+progress[value]::-webkit-progress-bar {
+  background-color: rgba(255, 255, 255, 0.3); /* Lighter background for progress bar */
+  border-radius: 3px;
+}
+
+progress[value]::-webkit-progress-value {
+  transition: width 1s linear; /* Smooth transition */
+  background: var(--md-sys-color-inverse-primary); /* Use inverse primary for progress */
+  border-radius: 3px;
+}
+
+progress[value]::-moz-progress-bar {
+  background: var(--md-sys-color-inverse-primary);
+  border-radius: 3px;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;700&display=swap"); /* Import for Montserrat Alt 1 */
+
+/* Universal box-sizing for easier layout */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
 #copyrightText {
-  position: absolute;
-  bottom: 5px;
+  position: fixed; /* Fixed position */
+  bottom: 10px; /* From the bottom */
+  left: 20px; /* From the left */
+  font-size: 12px;
+  color: var(--md-sys-color-on-surface-variant); /* More subtle color */
+  z-index: 1; /* Ensure it's visible */
 }
-
-
