@@ -62,10 +62,24 @@ createStationUI(
 );
 createStationUI(
     "Meet Mindseye",
-    "Meet Mineseye, a New Zealand-based record producer, visual artist, and DJ with Dutch roots. His music is a melodic blend of styles, samples and sounds, weaving together elements from electronica, downtempo and trip-hop as well as ambient and left-field hip-hop.",
+    "Meet Mineseye, a New Zealand-based record producer, visual artist, and DJ with Dutch roots.",
     "https://cdn.glitch.global/f81e375a-f3b2-430f-9115-3f352b74f21b/WR Substation Icon.png?v=1716472186074", // Replace with actual logo
     true,
     "Meet Mindseye"  // Add station name
+);
+createStationUI(
+    "Motivational Melodies",
+    "All the motivation, without all the lyrics! Time to get it done!",
+    "https://cdn.glitch.global/f81e375a-f3b2-430f-9115-3f352b74f21b/WR Substation Icon.png?v=1716472186074", // Replace with actual logo
+    true,
+    "Motivational Melodies"  // Add station name
+);
+createStationUI(
+    "Background Rock",
+    "Corporate background pop gets a taste of energy... with a side of electric guitar!",
+    "https://cdn.glitch.global/f81e375a-f3b2-430f-9115-3f352b74f21b/WR Substation Icon.png?v=1716472186074", // Replace with actual logo
+    true,
+    "Background Rock"  // Add station name
 );
 async function fetchDataFromServer(linkEnding, callback = () => { }) {
     fetch(`https://wildflower-radio-zj59.onrender.com${linkEnding}`)
