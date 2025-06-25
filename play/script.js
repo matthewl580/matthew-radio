@@ -1,10 +1,11 @@
 function createStationUI(title, desc, logoLink, availableToPlay, stationName) { // Add stationName parameter
-    let actionButton = `<div class="tuneInButton" onclick="tuneIn('${stationName}')">  </div> 
+    let actionButton = `<div class="tuneInButton" onclick="tuneIn('${stationName}')">  
         <span class="tuneInButtonIcon material-symbols-rounded">
             play_arrow
         </span>
         <span class="tuneInButtonText">Tune In</span>
-    </div>`;
+    </div>
+    `;
     if (!availableToPlay) {
         actionButton = `<div class="tuneInButton"> </div>
             <span class="tuneInButtonIcon material-symbols-rounded">
