@@ -4,6 +4,8 @@ let uiUpdateInterval; // Interval for UI updates and continuous data fetching
 let preloadedNextSegmentSrc = {}; // Stores the SRC of the *next* segment once preloaded
 let currentlyPlayingStation = null; // Track the name of the currently active station
 
+const CLIENT_SERVER_BUFFER_SECONDS = 3; // The desired time difference between client and server playback
+
 audioElement.onended = function () {
     console.log("Segment ended for current audio element.");
     let currentStationName = document.getElementById("trackName").dataset.station;
@@ -38,20 +40,21 @@ function fetchAndUpdateStationData(stationName, forcePlay = false) {
     getAllTrackInformation((allTrackObjects) => { // This fetches ALL data from the server
         const trackObject = allTrackObjects[stationName];
         if (trackObject) {
+            // Always update UI with the server's authoritative data
             populateUI(trackObject, stationName);
             
-            // If forced to play immediately (e.g., segment ended and no preload)
-            if (forcePlay) {
-                console.log(`Forcing play of current segment: ${trackObject.currentSegment.SRC}`);
+            // Logic to play the main audio element
+            if (forcePlay || (audioElement.src === "" && !audioElement.paused)) { // If nothing is playing or explicitly forced
+                console.log(`Setting main audio source to: ${trackObject.currentSegment.SRC}`);
                 audioElement.src = trackObject.currentSegment.SRC;
-                audioElement.currentTime = trackObject.currentSegment.position;
+                // Apply the buffer when setting the current time for the main playback
+                audioElement.currentTime = Math.max(0, trackObject.currentSegment.position - CLIENT_SERVER_BUFFER_SECONDS);
                 audioElement.play();
             }
 
-            // Always try to preload the *next* segment based on the fresh data
-            // The server's 'currentSegment.SRC' for this fetch is what we want to preload
-            // for the *next* segment to be played by the client.
-            preloadNextSegment(trackObject, stationName);
+            // Always attempt to preload the *next* segment based on the fresh server data
+            // Only preload if the server's current SRC is different from what's playing or already preloaded
+            preloadNextSegment(trackObject.currentSegment.SRC, stationName, audioElement.src, preloadedNextSegmentSrc[stationName]);
 
         } else {
             console.error(`Track object not found for station: ${stationName} after fetching updated data.`);
@@ -72,19 +75,28 @@ function tuneIn(substationName) {
         if (trackObject) {
             populateUI(trackObject, substationName);
             audioElement.src = trackObject.currentSegment.SRC;
-            audioElement.currentTime = trackObject.currentSegment.position;
+            // Apply the buffer for the initial playback
+            audioElement.currentTime = Math.max(0, trackObject.currentSegment.position - CLIENT_SERVER_BUFFER_SECONDS);
             audioElement.play();
-            console.log(`Playing initial segment: ${trackObject.currentSegment.SRC} from position ${trackObject.currentSegment.position}`);
+            console.log(`Playing initial segment: ${trackObject.currentSegment.SRC} from position ${audioElement.currentTime.toFixed(2)} (buffered). Server position: ${trackObject.currentSegment.position}`);
 
-            // Preload the next segment based on this initial fetch
-            preloadNextSegment(trackObject, substationName);
+            // IMMEDIATELY trigger a second fetch to get the data for the *next* segment for preloading.
+            // We pass the currently playing SRC so preloadNextSegment can compare.
+            getAllTrackInformation((secondFetchAllTrackObjects) => {
+                const secondFetchTrackObject = secondFetchAllTrackObjects[substationName];
+                if (secondFetchTrackObject) {
+                    // Preload using the SRC from this second fetch
+                    // This secondFetchTrackObject.currentSegment.SRC is what the server *currently* sees as next/active
+                    preloadNextSegment(secondFetchTrackObject.currentSegment.SRC, substationName, audioElement.src, preloadedNextSegmentSrc[substationName]);
+                }
+            });
 
         } else {
             console.error(`Track object not found for station: ${substationName} on tune-in.`);
         }
     });
 
-    // Set up the interval for continuous UI updates and preloading
+    // Set up the interval for continuous data fetching and UI updates
     uiUpdateInterval = setInterval(function () {
         // Only fetch and update if there's an active station
         if (currentlyPlayingStation) {
@@ -94,27 +106,24 @@ function tuneIn(substationName) {
 }
 
 /**
- * Preloads the next audio segment for a given station using the SRC provided by the server.
- * This is called AFTER new data has been fetched from the server.
- * @param {object} trackObject The track object for the current station (from fresh server data).
+ * Preloads the next audio segment if the provided serverSRC is different from current or preloaded.
+ * @param {string} serverSRC The currentSegment.SRC from the latest server data.
  * @param {string} stationName The name of the current station.
+ * @param {string} currentAudioElementSrc The current SRC of the main audio element.
+ * @param {string} alreadyPreloadedSrc The SRC already stored in preloadedNextSegmentSrc for this station.
  */
-function preloadNextSegment(trackObject, stationName) {
-    // The server's `currentSegment.SRC` from the *newly fetched data*
-    // is what we want to preload for the *next* client-side segment.
-    const nextSegmentSRCFromServer = trackObject.currentSegment.SRC;
-
-    if (nextSegmentSRCFromServer && 
-        nextSegmentSRCFromServer !== audioElement.src && // Not already playing on main element
-        nextSegmentSRCFromServer !== nextAudioElement.src) { // Not already preloaded
+function preloadNextSegment(serverSRC, stationName, currentAudioElementSrc, alreadyPreloadedSrc) {
+    if (serverSRC && 
+        serverSRC !== currentAudioElementSrc && 
+        serverSRC !== alreadyPreloadedSrc) {
         
-        console.log(`Preloading ${stationName}'s NEXT segment (from server data): ${nextSegmentSRCFromServer}`);
-        nextAudioElement.src = nextSegmentSRCFromServer;
-        preloadedNextSegmentSrc[stationName] = nextSegmentSRCFromServer; // Store it for onended
+        console.log(`Preloading ${stationName}'s NEXT segment (from server data): ${serverSRC}`);
+        nextAudioElement.src = serverSRC;
+        preloadedNextSegmentSrc[stationName] = serverSRC; // Store it for onended
     } else {
         // This might happen if the server hasn't advanced to the next segment yet,
         // or if the segment is already playing/preloaded.
-        console.log(`Skipping preload for ${stationName}. Next segment already loaded/playing or no new SRC from server.`);
+        // console.log(`Skipping preload for ${stationName}. Server SRC: ${serverSRC}, Current: ${currentAudioElementSrc}, Preloaded: ${alreadyPreloadedSrc}`);
     }
 }
 
@@ -139,7 +148,7 @@ async function fetchDataFromServer(linkEnding, callback = () => { }) {
         });
 }
 
-// This function can now be called whenever, as clarified by the user.
+// This function can be called whenever, as clarified by the user.
 async function getAllTrackInformation(func = () => { }) { 
     fetchDataFromServer("/getAllTrackInformation", func);
 }
