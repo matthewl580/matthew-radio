@@ -35,45 +35,49 @@ h2 {
   color: var(--md-sys-color-surface);
   display: flex;
   flex-direction: column; /* Stack content vertically within the card */
-  padding: 20px; /* Increase padding for better visual spacing */
+  padding: 5px; /* Increase padding for better visual spacing */
   border-radius: 12px; /* Rounded corners for a modern look */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
   overflow: hidden; /* Hide overflowing text by default, use ellipsis for titles */
   position: relative; /* For positioning the tuneInButton */
-  min-height: 180px; /* Ensure a minimum height for consistent cards */
   justify-content: space-between; /* Push content to top and button to bottom */
+  aspect-ratio: 16/9; /* Maintain a consistent aspect ratio for cards */
+  transition: transform 0.2s ease-in-out; /* Smooth hover effect */
 }
 
-.substationContainer div {
-  margin-bottom: 10px; /* Add space between elements inside the card */
+.substationContainer:hover {
+  transform: translateY(-5px); /* Slightly lift the card on hover */
 }
-
 .substationTitle {
+  border-radius: 0px;
+  margin-top: 8px; /* Add space above the title */
+  margin-bottom: 4px; /* Add space below the title */
   font-weight: bold;
-  font-size: 20px; /* Slightly larger title */
+  font-size: 24px; /* Slightly larger title */
   white-space: nowrap; /* Prevent title from wrapping */
   overflow: hidden; /* Hide overflowing text */
   text-overflow: ellipsis; /* Add ellipsis for overflowing titles */
-  margin-bottom: 5px; /* Less space below title */
 }
 
 .substationDescription {
+  border-radius: 0px;
   font-size: 16px; /* Slightly smaller description for better hierarchy */
   line-height: 1.4; /* Improve readability */
   flex-grow: 1; /* Allow description to take up available space */
   overflow: hidden; /* Hide overflowing text */
   text-overflow: ellipsis; /* Add ellipsis for overflowing descriptions if needed */
-  display: -webkit-box; /* For multi-line ellipsis */
-  -webkit-line-clamp: 3; /* Limit description to 3 lines */
-  -webkit-box-orient: vertical;
+  
 }
 
 .substationLogoContainer {
-  width: 60px; /* Slightly larger logo */
-  height: 60px;
+  width: 100%; /* Slightly larger logo */
+  height: 100%; /* Ensure it fills the container */
+  margin-left: 4px;
+  height: 25px;
   border-radius: 50%; /* Make logo circular */
   overflow: hidden;
-  margin-bottom: 15px; /* Add space below the logo */
+  margin-right: 10px; /* Space between logo and title */
+  background-color: rgba(var(--md-sys-color-on-surface-rgb), 0.7);
 }
 
 .substationLogo {
@@ -87,20 +91,27 @@ h2 {
   filter: grayscale(80%); /* Make it more visually distinct when grayed out */
 }
 
+.logoAndPlayContainer {
+
+  width: 100%;
+  height: 50px; 
+  display: flex;
+  flex-direction: row;
+  
+}
 .tuneInButton {
   display: flex;
+  flex-direction: row;
+
   justify-content: center;
   align-items: center; /* Center both icon and text */
   gap: 10px; /* Space between icon and text */
-  height: 50px; /* Taller button for easier interaction */
-  width: calc(100% - 40px); /* Adjust width to account for card padding */
+  height: 100%; /* Taller button for easier interaction */
+aspect-ratio: 1/1;
   background-color: var(--md-sys-color-primary-container);
   color: var(--md-sys-color-primary);
-  border-radius: 8px; /* Rounded corners for the button */
-  position: absolute; /* Position relative to .substationContainer */
-  bottom: 20px; /* Consistent spacing from the bottom of the card */
-  left: 20px; /* Consistent spacing from the left of the card */
-  right: 20px; /* Consistent spacing from the right of the card */
+  border-radius: 12px; /* Rounded corners for the button */
+  
   cursor: pointer; /* Indicate it's clickable */
   font-weight: bold;
   text-transform: uppercase; /* Modern touch for button text */
@@ -274,49 +285,11 @@ body {
   padding-top: 60px; /* Height of #navBar */
   padding-bottom: 100px; /* Height of #nowPlayingUI */
   margin: 0; /* Remove default body margin */
+  overflow-y: scroll; /* Enable vertical scrolling */
+  margin-bottom: 100px; /* Ensure enough space for nowPlayingUI */;
 }
 
-@media (max-width: 768px) {
-  #navBar {
-    height: 50px; /* Smaller nav bar on mobile */
-  }
-
-  body {
-    padding-top: 50px;
-  }
-
-  .tuneInButton {
-    height: 45px;
-  }
-
-  #tuneInButtonIcon {
-    font-size: 24px;
-  }
-
-  #tuneInButtonText {
-    font-size: 16px;
-  }
-
-  #nowPlayingUI {
-    height: 80px; /* Smaller player on mobile */
-    padding-bottom: 5px; /* Adjust padding */
-  }
-
-  #trackName {
-    font-size: 20px;
-  }
-
-  #trackAuthor {
-    font-size: 16px;
-  }
-
-  #substationList {
-    grid-template-columns: 1fr; /* Single column on small screens */
-    padding: 10px;
-  }
-
-  .substationContainer {
-    width: auto; /* Allow cards to take full width */
-    margin: 0 10px; /* Add side margins */
-  }
+#substationList {
+  padding: 20px; /* Add padding around the grid */
+  margin: 0 auto; /* Center the grid within the body */
 }

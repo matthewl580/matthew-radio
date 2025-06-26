@@ -172,7 +172,6 @@ function createStationUI(title, desc, logoLink, availableToPlay, stationName) {
         <span class="tuneInButtonIcon material-symbols-rounded">
             play_arrow
         </span>
-        <span class="tuneInButtonText">Tune In</span>
     </div>
     `;
     if (!availableToPlay) {
@@ -185,18 +184,22 @@ function createStationUI(title, desc, logoLink, availableToPlay, stationName) {
     }
     document.getElementById(
         "substationList"
-    ).innerHTML += `<div class="substationContainer">
-            <div class="substationUIHeader">
-                <div class="substationLogoContainer">
+    ).innerHTML += `
+    <div class="substationContainer">
+    <div class="logoAndPlayContainer">
+                ${actionButton}
+
+     <div class="substationLogoContainer">
                     <img
                         class="substationLogo"
                         src="${logoLink}"
                     />
                 </div>
-                <div class="substationTitle">${title}</div>
             </div>
+                            <div class="substationTitle">${title}</div>
+
             <div class="substationDescription">${desc}</div>
-            ${actionButton}
+            
         </div>`;
 }
 
