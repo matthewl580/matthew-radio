@@ -1,7 +1,7 @@
 // Theme Management System
 class ThemeManager {
   constructor() {
-    this.currentTheme = localStorage.getItem('theme') || 'light';
+    this.currentTheme = localStorage.getItem('theme') || 'dark';
     this.themeToggle = document.getElementById('themeToggle');
     this.init();
   }
@@ -21,7 +21,7 @@ class ThemeManager {
   }
 
   toggleTheme() {
-    this.currentTheme = this.currentTheme === 'light' ? 'dark' : 'light';
+    this.currentTheme = this.currentTheme === 'dark' ? 'light' : 'dark';
     this.applyTheme(this.currentTheme);
     this.updateToggleIcon();
     localStorage.setItem('theme', this.currentTheme);
@@ -33,7 +33,7 @@ class ThemeManager {
     // Update meta theme-color for mobile browsers
     const metaThemeColor = document.querySelector('meta[name="theme-color"]');
     if (metaThemeColor) {
-      metaThemeColor.content = theme === 'dark' ? '#121212' : '#ffffff';
+      metaThemeColor.content = theme === 'dark' ? '#0a0a0a' : '#ffffff';
     }
   }
 
@@ -41,7 +41,7 @@ class ThemeManager {
     if (this.themeToggle) {
       const icon = this.themeToggle.querySelector('.material-symbols-rounded');
       if (icon) {
-        icon.textContent = this.currentTheme === 'light' ? 'dark_mode' : 'light_mode';
+        icon.textContent = this.currentTheme === 'dark' ? 'light_mode' : 'dark_mode';
       }
     }
   }

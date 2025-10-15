@@ -2,6 +2,26 @@
 
 /* CSS Custom Properties for Theme System */
 :root {
+  /* Dark Mode Colors - Default Theme */
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #111111;
+  --bg-tertiary: #1a1a1a;
+  --text-primary: #ffffff;
+  --text-secondary: #b3b3b3;
+  --text-muted: #808080;
+  --border-color: #333333;
+  --shadow-light: rgba(0, 0, 0, 0.4);
+  --shadow-medium: rgba(0, 0, 0, 0.5);
+  --shadow-heavy: rgba(0, 0, 0, 0.7);
+  --accent-primary: #3f51b5;
+  --accent-secondary: #2196f3;
+  --accent-light: #1a237e;
+  --success: #4caf50;
+  --error: #f44336;
+  --warning: #ff9800;
+}
+
+[data-theme="light"] {
   /* Light Mode Colors */
   --bg-primary: #ffffff;
   --bg-secondary: #f8f9fa;
@@ -21,25 +41,6 @@
   --warning: #ffc107;
 }
 
-[data-theme="dark"] {
-  /* Dark Mode Colors */
-  --bg-primary: #121212;
-  --bg-secondary: #1e1e1e;
-  --bg-tertiary: #2d2d2d;
-  --text-primary: #ffffff;
-  --text-secondary: #b3b3b3;
-  --text-muted: #808080;
-  --border-color: #404040;
-  --shadow-light: rgba(0, 0, 0, 0.3);
-  --shadow-medium: rgba(0, 0, 0, 0.4);
-  --shadow-heavy: rgba(0, 0, 0, 0.6);
-  --accent-primary: #3f51b5;
-  --accent-secondary: #2196f3;
-  --accent-light: #1a237e;
-  --success: #4caf50;
-  --error: #f44336;
-  --warning: #ff9800;
-}
 
 * { 
   font-family: "Montserrat", sans-serif;
@@ -83,6 +84,7 @@ body {
   font-size: 3.5rem;
   font-weight: 700;
   background: linear-gradient(45deg, #ffffff, var(--accent-light));
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin: 0 0 20px 0;
@@ -255,6 +257,7 @@ body {
   font-weight: 700;
   margin: 0 0 10px 0;
   background: linear-gradient(45deg, #fff, rgba(255, 255, 255, 0.8));
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -322,6 +325,22 @@ body {
   box-shadow: 0 12px 30px var(--shadow-heavy);
 }
 
+.cta-button.primary:focus {
+  outline: 3px solid var(--accent-primary);
+  outline-offset: 2px;
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px var(--shadow-heavy);
+}
+
+.cta-button.primary:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.cta-button.primary:focus-visible {
+  outline: 3px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+
 .cta-button.secondary {
   background: transparent;
   color: var(--accent-primary);
@@ -332,6 +351,23 @@ body {
   background: var(--accent-primary);
   color: white;
   box-shadow: 0 4px 15px var(--shadow-medium);
+}
+
+.cta-button.secondary:focus {
+  outline: 3px solid var(--accent-primary);
+  outline-offset: 2px;
+  background: var(--accent-primary);
+  color: white;
+  box-shadow: 0 4px 15px var(--shadow-medium);
+}
+
+.cta-button.secondary:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.cta-button.secondary:focus-visible {
+  outline: 3px solid var(--accent-primary);
+  outline-offset: 2px;
 }
 
 .cta-button.large {
@@ -400,6 +436,7 @@ body {
 /* Navigation Bar */
 #navBar {
   background: var(--bg-secondary);
+  -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
   position: fixed;
   top: 0;
@@ -532,7 +569,7 @@ body {
 #copyrightText {
   background-color: var(--bg-secondary);
   padding: 20px;
-  text-align: center;
+      text-align: center;
   margin-top: 0;
   border-top: 1px solid var(--border-color);
 }
