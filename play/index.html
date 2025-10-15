@@ -1,62 +1,23 @@
+<!DOCTYPE html>
 <html lang="en">
   <head>
-   
-    <title style="display: none">Matthew Radio</title>
-
-    <!-- Import the webpage's stylesheet -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Matthew Internet Radio - Play</title>
     <link rel="stylesheet" href="/global/styles.css" />
+    <link rel="stylesheet" href="/style.css" />
     <link rel="stylesheet" href="/play/style.css" />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
       rel="stylesheet"
     />
-
-    <script src="/play/script.js" defer></script>
-
-    <meta charset="utf-8" />
-    <link rel="icon" href="{{seo.image}}" />
-    <!-- NOTE: CHANGE THIS TO THE ACTUAL LOGO -->
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <meta charset="utf-8" />
-    <link
-      rel="icon"
-      href="https://cdn.glitch.global/f81e375a-f3b2-430f-9115-3f352b74f21b/MIR Logo.png?v=1716468410227"
-    />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <!-- Meta tags for SEO and social sharing -->
-    <link
-      rel="canonical"
-      href="https://cdn.glitch.global/f81e375a-f3b2-430f-9115-3f352b74f21b/MIR Logo.png?v=1716468410227"
-    />
-    <meta
-      name="description"
-      content="A simple Node site built with Glitch. Remix it to get your own."
-    />
-    <meta property="og:title" content="Wildflower Radio" />
-    <meta property="og:type" content="article" />
-    <meta
-      property="og:url"
-      content="https://cdn.glitch.global/f81e375a-f3b2-430f-9115-3f352b74f21b/MIR Logo.png?v=1716468410227"
-    />
-    <meta
-      property="og:description"
-      content="A simple Node site built with Glitch. Remix it to get your own."
-    />
-    <meta
-      property="og:image"
-      content="https://cdn.glitch.global/f81e375a-f3b2-430f-9115-3f352b74f21b/MIR Logo.png?v=1716468410227"
-    />
-    <meta name="twitter:card" content="summary" />
-
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
     />
+    <link rel="icon" href="https://cdn.glitch.global/f81e375a-f3b2-430f-9115-3f352b74f21b/MIR Logo.png?v=1716468410227" />
+    <script src="/theme.js" defer></script>
+    <script src="/play/script.js" defer></script>
   </head>
   <body>
     <div id="navBar">
@@ -65,37 +26,64 @@
           <img
             id="logomark"
             src="https://cdn.glitch.global/f81e375a-f3b2-430f-9115-3f352b74f21b/MIR Logo.png?v=1716468410227"
+            alt="Matthew Radio Logo"
           />
         </div>
         <div id="brandWordMark">Matthew Radio</div>
       </div>
       <div id="navBarOptions">
         <div class="navBarOption">
-          <span class="material-symbols-rounded"> emoji_people </span
-          ><span class="optionText">Join Us</span>
+          <span class="material-symbols-rounded">home</span>
+          <span class="optionText"><a href="/" class="nav-link">Home</a></span>
         </div>
         <div class="navBarOption">
-          <span class="material-symbols-rounded"> volunteer_activism </span
-          ><span class="optionText">Donate</span>
+          <span class="material-symbols-rounded">emoji_people</span>
+          <span class="optionText"><a href="/join" class="nav-link">Join Us</a></span>
         </div>
+        <div class="navBarOption">
+          <span class="material-symbols-rounded">volunteer_activism</span>
+          <span class="optionText">Donate</span>
+        </div>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+          <span class="material-symbols-rounded">dark_mode</span>
+        </button>
       </div>
     </div>
-    <div>
-      <h2>Substations</h2>
 
-      <div id="substationList"></div>
-      <div id="nowPlayingUI">
-        <div id="trackInfoContainer">
-          <span id="trackName"></span>
-          <span id="trackAuthor"></span>
-        </div>
-        <div id="trackPositionInfo">
-          <progress id="trackProgressMeter" value="0" max="100"></progress>
-          <span id="trackCurrentPosition"></span>-
-          <span id="trackDuration"></span>
+    <!-- Main Content -->
+    <div class="play-container">
+      <div class="play-header">
+        <h1 class="play-title">Live Radio Streams</h1>
+        <p class="play-subtitle">Choose your favorite station and start listening</p>
+      </div>
+
+      <div class="stations-section">
+        <h2>Available Stations</h2>
+        <div id="substationList" class="stations-grid"></div>
+      </div>
+
+      <div id="nowPlayingUI" class="now-playing-section">
+        <h2>Now Playing</h2>
+        <div class="track-info-card">
+          <div id="trackInfoContainer" class="track-info">
+            <span id="trackName" class="track-name">Select a station to start listening</span>
+            <span id="trackAuthor" class="track-author"></span>
+          </div>
+          <div id="trackPositionInfo" class="track-progress">
+            <progress id="trackProgressMeter" value="0" max="100"></progress>
+            <div class="time-info">
+              <span id="trackCurrentPosition">0:00</span>
+              <span id="trackDuration">0:00</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+
     <audio id="audio" src=""></audio>
+
+    <footer id="copyrightText">
+      <p>Copyright Matthew Internet Radio. All rights reserved.</p>
+    </footer>
   </body>
 </html>

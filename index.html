@@ -14,6 +14,7 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
     />
+    <script src="/theme.js" defer></script>
   </head>
   <body>
     <div id="navBar">
@@ -22,34 +23,145 @@
           <img
             id="logomark"
             src="https://cdn.glitch.global/f81e375a-f3b2-430f-9115-3f352b74f21b/MIR Logo.png?v=1716468410227"
+            alt="Matthew Radio Logo"
           />
         </div>
         <div id="brandWordMark">Matthew Radio</div>
       </div>
       <div id="navBarOptions">
         <div class="navBarOption">
-          <span class="material-symbols-rounded"> emoji_people </span
-          ><span class="optionText">Join Us</span>
+          <span class="material-symbols-rounded">emoji_people</span>
+          <span class="optionText"><a href="/join" class="nav-link">Join Us</a></span>
         </div>
         <div class="navBarOption">
           <span class="material-symbols-rounded"> volunteer_activism </span
           ><span class="optionText">Donate</span>
         </div>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+          <span class="material-symbols-rounded">dark_mode</span>
+        </button>
       </div>
     </div>
-    <br />
-    <div class="sectionBlock">
-      <h1>Discover the newest in music</h1>
-      <p>Tune in 24/7 to enjoy the best of internet radio.</p>
-      <div>
-        <a id="tuneInButton" href="/play">Interested? <u>Tune In</u></a>
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-content">
+        <h1 class="hero-title">Experience Music Like Never Before</h1>
+        <p class="hero-subtitle">Join thousands of listeners discovering the best in internet radio - 24/7, commercial-free, and curated just for you.</p>
+        <div class="hero-actions">
+          <a href="/play" class="cta-button primary" role="button" aria-label="Start listening to Matthew Radio">
+            <span class="material-symbols-rounded">play_arrow</span>
+            Start Listening Now
+          </a>
+          <a href="#benefits" class="cta-button secondary" role="button" aria-label="Learn more about Matthew Radio benefits">
+            <span class="material-symbols-rounded">info</span>
+            Learn More
+          </a>
+        </div>
       </div>
-    </div>
+      <div class="hero-visual">
+        <div class="radio-waves">
+          <div class="wave wave-1"></div>
+          <div class="wave wave-2"></div>
+          <div class="wave wave-3"></div>
+        </div>
+      </div>
+    </section>
 
-   <footer id="copyrightText">
-        <p>
-          Copyright Matthew Internet Radio. All rights reserved.
-        </p>
+    <!-- Benefits Section -->
+    <section id="benefits" class="benefits-section">
+      <div class="container">
+        <h2 class="section-title">Why Choose Matthew Radio?</h2>
+        <div class="benefits-grid">
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <span class="material-symbols-rounded">music_note</span>
+            </div>
+            <h3>Curated Playlists</h3>
+            <p>Hand-picked music from emerging artists and timeless classics, updated regularly by our expert DJs.</p>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <span class="material-symbols-rounded">schedule</span>
+            </div>
+            <h3>24/7 Streaming</h3>
+            <p>Never miss a beat with our continuous broadcast. Your favorite music is always just one click away.</p>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <span class="material-symbols-rounded">volume_up</span>
+            </div>
+            <h3>High Quality Audio</h3>
+            <p>Experience crystal-clear sound with our premium streaming quality, optimized for every device.</p>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <span class="material-symbols-rounded">smartphone</span>
+            </div>
+            <h3>Multi-Platform</h3>
+            <p>Listen anywhere, anytime. Compatible with all devices - desktop, mobile, tablet, and smart speakers.</p>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <span class="material-symbols-rounded">group</span>
+            </div>
+            <h3>Community Driven</h3>
+            <p>Join a vibrant community of music lovers. Request songs, interact with DJs, and discover new favorites.</p>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <span class="material-symbols-rounded">favorite</span>
+            </div>
+            <h3>Ad-Free Experience</h3>
+            <p>Enjoy uninterrupted music without commercial breaks. Pure listening pleasure from start to finish.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="stat-number">10,000+</div>
+            <div class="stat-label">Active Listeners</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">50,000+</div>
+            <div class="stat-label">Songs in Library</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">24/7</div>
+            <div class="stat-label">Live Broadcasting</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">100%</div>
+            <div class="stat-label">Ad-Free</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="cta-section">
+      <div class="container">
+        <h2>Ready to Start Your Musical Journey?</h2>
+        <p>Join our community today and discover why thousands choose Matthew Radio for their daily soundtrack.</p>
+        <div class="cta-actions">
+          <a href="/play" class="cta-button primary large" role="button" aria-label="Start listening to Matthew Radio for free">
+            <span class="material-symbols-rounded">play_arrow</span>
+            Start Listening Free
+          </a>
+          <a href="#navBar" class="cta-button secondary large" role="button" aria-label="Join the Matthew Radio community">
+            <span class="material-symbols-rounded">group_add</span>
+            Join Our Community
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <footer id="copyrightText">
+      <p>Copyright Matthew Internet Radio. All rights reserved.</p>
     </footer>
   </body>
 </html>

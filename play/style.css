@@ -1,295 +1,249 @@
-body {
-  font-family: "Montserrat", serif;
-  margin-top: 75px;
+/* Play Page Styles */
+.play-container {
+  padding: 40px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: var(--bg-primary);
 }
 
-img {
-  width: 100%;
-  height: 100%;
+.play-header {
+  text-align: center;
+  margin-bottom: 60px;
+  padding: 40px 0;
+  background: var(--bg-secondary);
+  border-radius: 20px;
+  box-shadow: 0 8px 30px var(--shadow-light);
+  border: 1px solid var(--border-color);
 }
 
-h2 {
-  margin: 5px;
+.play-header {
+  text-align: center;
+  margin-bottom: 60px;
 }
 
-.substationUIHeader {
-  display: flex;
-  flex-direction: row;
-  align-items: center; /* Align items vertically in the header */
-  margin-bottom: 20px; /* Add some space below the header */
+.play-title {
+  font-size: 3rem;
+  font-weight: 700;
+  background: linear-gradient(45deg, #1a237e, #0d47a1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0 0 20px 0;
 }
 
-#substationList {
-  width: 100%; /* Use 100% width for better responsiveness */
-  padding: 10px;
-  display: grid; /* Use CSS Grid for a modern card layout */
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Responsive columns */
-  gap: 20px; /* Space between grid items */
-  overflow-x: hidden; /* Prevent horizontal overflow for the list itself */
-  justify-content: center; /* Center the grid items if there's extra space */
-  box-sizing: border-box; /* Include padding in the element's total width and height */
+.play-subtitle {
+  font-size: 1.2rem;
+  color: var(--md-sys-color-on-background);
+  opacity: 0.8;
+  margin: 0;
+}
+
+.stations-section {
+  margin-bottom: 60px;
+  padding: 40px 0;
+  background: var(--bg-secondary);
+  border-radius: 20px;
+  box-shadow: 0 8px 30px var(--shadow-light);
+  border: 1px solid var(--border-color);
+}
+
+.stations-section h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--md-sys-color-on-background);
+  margin: 0 0 30px 0;
+  text-align: center;
+}
+
+.stations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  padding: 20px 0;
 }
 
 .substationContainer {
-  background-color: var(--md-sys-color-on-surface);
-  color: var(--md-sys-color-surface);
+  background: var(--md-sys-color-surface);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid var(--md-sys-color-outline-variant);
   display: flex;
-  flex-direction: column; /* Stack content vertically within the card */
-  padding: 5px; /* Increase padding for better visual spacing */
-  border-radius: 12px; /* Rounded corners for a modern look */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  overflow: hidden; /* Hide overflowing text by default, use ellipsis for titles */
-  position: relative; /* For positioning the tuneInButton */
-  justify-content: space-between; /* Push content to top and button to bottom */
-  aspect-ratio: 16/9; /* Maintain a consistent aspect ratio for cards */
-  transition: transform 0.2s ease-in-out; /* Smooth hover effect */
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 .substationContainer:hover {
-  transform: translateY(-5px); /* Slightly lift the card on hover */
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
 }
+
 .substationTitle {
-  border-radius: 0px;
-  margin-top: 8px; /* Add space above the title */
-  margin-bottom: 4px; /* Add space below the title */
-  font-weight: bold;
-  font-size: 24px; /* Slightly larger title */
-  white-space: nowrap; /* Prevent title from wrapping */
-  overflow: hidden; /* Hide overflowing text */
-  text-overflow: ellipsis; /* Add ellipsis for overflowing titles */
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--md-sys-color-on-surface);
+  margin: 0 0 15px 0;
 }
 
 .substationDescription {
-  border-radius: 0px;
-  font-size: 16px; /* Slightly smaller description for better hierarchy */
-  line-height: 1.4; /* Improve readability */
-  flex-grow: 1; /* Allow description to take up available space */
-  overflow: hidden; /* Hide overflowing text */
-  text-overflow: ellipsis; /* Add ellipsis for overflowing descriptions if needed */
-  
+  font-size: 1rem;
+  color: var(--md-sys-color-on-surface-variant);
+  line-height: 1.6;
+  margin: 0 0 20px 0;
+  flex-grow: 1;
+}
+
+.logoAndPlayContainer {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+  justify-content: center;
 }
 
 .substationLogoContainer {
-  width: 100%; /* Slightly larger logo */
-  height: 100%; /* Ensure it fills the container */
-  margin-left: 4px;
-  height: 25px;
-  border-radius: 50%; /* Make logo circular */
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
   overflow: hidden;
-  margin-right: 10px; /* Space between logo and title */
-  background-color: rgba(var(--md-sys-color-on-surface-rgb), 0.7);
+  background: var(--md-sys-color-primary-container);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .substationLogo {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Ensure logo covers its container without distortion */
+  object-fit: cover;
 }
 
-.grayedOut {
-  opacity: 0.6; /* Slightly less opaque for better visibility */
-  filter: grayscale(80%); /* Make it more visually distinct when grayed out */
-}
-
-.logoAndPlayContainer {
-
-  width: 100%;
-  height: 50px; 
-  display: flex;
-  flex-direction: row;
-  
-}
 .tuneInButton {
+  background: linear-gradient(45deg, #1a237e, #0d47a1);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 15px 30px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
   display: flex;
-  flex-direction: row;
-
-  justify-content: center;
-  align-items: center; /* Center both icon and text */
-  gap: 10px; /* Space between icon and text */
-  height: 100%; /* Taller button for easier interaction */
-aspect-ratio: 1/1;
-  background-color: var(--md-sys-color-primary-container);
-  color: var(--md-sys-color-primary);
-  border-radius: 12px; /* Rounded corners for the button */
-  
-  cursor: pointer; /* Indicate it's clickable */
-  font-weight: bold;
-  text-transform: uppercase; /* Modern touch for button text */
-  transition: background-color 0.2s ease-in-out; /* Smooth hover effect */
+  align-items: center;
+  gap: 10px;
 }
 
 .tuneInButton:hover {
-  background-color: color-mix(in srgb, var(--md-sys-color-primary-container) 80%, black); /* Darken on hover */
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
 
-#tuneInButtonIcon {
-  font-size: 28px; /* Adjust icon size to be more balanced with text */
+.grayedOut {
+  opacity: 0.6;
+  filter: grayscale(80%);
 }
 
-#tuneInButtonText {
-  font-size: 18px; /* Adjust text size for better readability */
+/* Now Playing Section */
+.now-playing-section {
+  background: var(--md-sys-color-surface-container);
+  border-radius: 20px;
+  padding: 40px;
+  margin-bottom: 40px;
 }
 
-#navBar {
-  background-color: var(--md-sys-color-secondary-container);
-  position: fixed; /* Use fixed for a sticky navigation bar */
-  top: 0; /* Align to the very top */
-  left: 0;
-  width: 100vw; /* Full viewport width */
-  height: 60px; /* Slightly taller nav bar */
-  display: flex;
-  flex-direction: row;
-  align-items: center; /* Vertically center content */
-  padding: 0 20px; /* Add horizontal padding */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  z-index: 1000; /* Ensure nav bar is on top */
+.now-playing-section h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--md-sys-color-on-surface);
+  margin: 0 0 30px 0;
+  text-align: center;
 }
 
-#navBarOptions {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-end;
-  height: 100%;
-  flex: auto;
+.track-info-card {
+  background: var(--md-sys-color-surface);
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
-.navBarOption {
-  margin-right: 20px; /* Increase spacing between nav options */
-  margin-left: 0; /* Remove left margin as flexbox handles spacing */
-  color: var(--md-sys-color-on-secondary-container); /* Use appropriate color from MD system */
-  text-decoration: none; /* Remove underline from links */
-  font-weight: 500;
-  transition: color 0.2s ease-in-out; /* Smooth hover effect */
+.track-info {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-.navBarOption:last-child {
-  margin-right: 0; /* No right margin for the last item */
+.track-name {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1a237e;
+  display: block;
+  margin-bottom: 10px;
 }
 
-.navBarOption:hover {
-  color: var(--md-sys-color-primary); /* Change color on hover */
-}
-
-#logomarkContainer {
-  width: 40px; /* Slightly larger logo mark */
-  height: 40px !important;
-  margin-right: 10px; /* Increase space between logomark and wordmark */
-}
-
-#logoBar {
-  display: flex;
-  flex-direction: row;
-  align-items: center; /* Align logo and wordmark */
-}
-
-#brandWordMark {
-  font-family: "MontserratAlt1", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  font-size: 24px; /* Adjust size for better balance */
-  color: var(--md-sys-color-on-secondary-container); /* Use appropriate color */
-}
-
-#nowPlayingUI {
-  position: fixed; /* Fixed to the bottom */
-  bottom: 0;
-  left: 0;
-  width: 100vw; /* Full viewport width */
-  height: 100px; /* Adjust height for a more compact player */
-  background-color: var(--md-sys-color-secondary-container);
-  color: var(--md-sys-color-secondary);
-  display: flex;
-  flex-direction: column;
-  justify-content: center; /* Center content vertically */
-  align-items: center; /* Center content horizontally */
-  padding: 0 20px 10px; /* Adjust padding for better look */
-  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1); /* Shadow at the top */
-  z-index: 999; /* Below the nav bar */
-}
-
-#trackInfoContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* Center track info */
-  width: 100%;
-  color: var(--md-sys-color-secondary);
-  margin-top: 5px; /* Reduced top margin */
-}
-
-#trackName {
-  font-size: 24px; /* Slightly smaller for balance */
-  color: var(--md-sys-color-primary);
-  font-weight: bold;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 90%; /* Prevent overflow on smaller screens */
-}
-
-#trackAuthor {
-  font-size: 18px; /* Slightly smaller */
+.track-author {
+  font-size: 1.1rem;
+  color: var(--md-sys-color-on-surface-variant);
   font-style: italic;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 90%; /* Prevent overflow on smaller screens */
+  display: block;
 }
 
-#trackPositionInfo {
-  width: calc(100% - 40px); /* Account for padding */
-  margin-top: 10px; /* Space above progress bar */
+.track-progress {
+  width: 100%;
 }
 
 #trackProgressMeter {
   width: 100%;
-  height: 8px; /* Thicker progress bar */
+  height: 8px;
+  border-radius: 4px;
+  background: var(--md-sys-color-outline-variant);
   appearance: none;
-  border-radius: 5px; /* Rounded progress bar */
-  overflow: hidden; /* Hide overflow for rounded corners */
+  margin-bottom: 10px;
 }
 
-progress[value]::-webkit-progress-bar {
-  background-color: rgba(var(--md-sys-color-secondary-rgb), 0.3); /* Lighter background for the bar */
+#trackProgressMeter::-webkit-progress-bar {
+  background: var(--md-sys-color-outline-variant);
+  border-radius: 4px;
 }
 
-progress[value]::-webkit-progress-value {
-  background: var(--md-sys-color-secondary);
-  border-radius: 5px; /* Keep value rounded */
-  transition: width 1s ease-in-out; /* Smoother transition */
+#trackProgressMeter::-webkit-progress-value {
+  background: linear-gradient(45deg, #1a237e, #0d47a1);
+  border-radius: 4px;
 }
 
-progress[value]::-moz-progress-bar {
-  background: var(--md-sys-color-secondary);
+.time-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: var(--md-sys-color-on-surface-variant);
 }
 
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
-
-/* Global font setting for consistency */
-* {
-  font-family: "Montserrat", sans-serif;
-  box-sizing: border-box; /* Ensure padding and border are included in element's total width and height */
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  .play-title {
+    font-size: 2.5rem;
+  }
+  
+  .stations-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .play-container {
+    padding: 20px 15px;
+  }
+  
+  .now-playing-section {
+    padding: 30px 20px;
+  }
 }
 
-#copyrightText {
-  position: absolute;
-  bottom: 5px;
-  width: 100%; /* Ensure it spans the width */
-  text-align: center; /* Center the copyright text */
-  font-size: 12px; /* Smaller font size */
-  color: rgba(var(--md-sys-color-on-surface-rgb), 0.7); /* Slightly muted color */
-}
-
-/* Ensure body padding accounts for fixed navBar and nowPlayingUI */
-body {
-  padding-top: 60px; /* Height of #navBar */
-  padding-bottom: 100px; /* Height of #nowPlayingUI */
-  margin: 0; /* Remove default body margin */
-  overflow-y: scroll; /* Enable vertical scrolling */
-  margin-bottom: 100px; /* Ensure enough space for nowPlayingUI */;
-}
-
-#substationList {
-  padding: 20px; /* Add padding around the grid */
-  margin: 0 auto; /* Center the grid within the body */
+@media screen and (max-width: 600px) {
+  .play-title {
+    font-size: 2rem;
+  }
+  
+  .stations-section h2,
+  .now-playing-section h2 {
+    font-size: 1.5rem;
+  }
 }

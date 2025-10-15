@@ -1,0 +1,289 @@
+/* Join Us Page Styles */
+.join-hero {
+  background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+  padding: 100px 20px;
+  text-align: center;
+  color: white;
+}
+
+.join-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.join-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin: 0 0 20px 0;
+  background: linear-gradient(45deg, #ffffff, #e3f2fd);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.join-subtitle {
+  font-size: 1.3rem;
+  opacity: 0.9;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.join-benefits {
+  padding: 100px 20px;
+  background-color: var(--bg-secondary);
+}
+
+.join-benefits .section-title {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: var(--accent-primary);
+  margin: 0 0 60px 0;
+}
+
+.join-benefits .benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+.join-benefits .benefit-card {
+  background: var(--bg-primary);
+  padding: 40px 30px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 8px 30px var(--shadow-light);
+  transition: all 0.3s ease;
+  border: 1px solid var(--border-color);
+}
+
+.join-benefits .benefit-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 40px var(--shadow-medium);
+}
+
+.join-benefits .benefit-icon {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  box-shadow: 0 8px 20px var(--shadow-medium);
+}
+
+.join-benefits .benefit-icon .material-symbols-rounded {
+  font-size: 2.5rem;
+  color: white;
+}
+
+.join-benefits .benefit-card h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 15px 0;
+}
+
+.join-benefits .benefit-card p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Join Form Section */
+.join-form-section {
+  padding: 100px 20px;
+  background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+  color: white;
+}
+
+.join-form-section .form-container {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.join-form-section h2 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin: 0 0 20px 0;
+}
+
+.join-form-section p {
+  font-size: 1.2rem;
+  opacity: 0.9;
+  margin: 0 0 40px 0;
+}
+
+.join-form {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 40px;
+  text-align: left;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.form-group {
+  margin-bottom: 25px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: white;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 15px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #e3f2fd;
+}
+
+.form-group select {
+  cursor: pointer;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.form-actions {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.submit-button {
+  background: linear-gradient(45deg, #ffffff, #e3f2fd);
+  color: #1a237e;
+  border: none;
+  border-radius: 25px;
+  padding: 15px 40px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.submit-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 255, 255, 0.3);
+}
+
+/* Community Stats */
+.community-stats {
+  padding: 80px 20px;
+  background-color: var(--bg-secondary);
+  text-align: center;
+}
+
+.community-stats h2 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 50px 0;
+}
+
+.community-stats .stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 40px;
+}
+
+.community-stats .stat-item {
+  padding: 20px;
+}
+
+.community-stats .stat-number {
+  font-size: 3rem;
+  font-weight: 700;
+  margin: 0 0 10px 0;
+  background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.community-stats .stat-label {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* Active Navigation State */
+.navBarOption.active {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 5px 10px;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  .join-title {
+    font-size: 2.5rem;
+  }
+  
+  .join-benefits .benefits-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .join-form {
+    padding: 30px 20px;
+  }
+  
+  .community-stats .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .join-title {
+    font-size: 2rem;
+  }
+  
+  .join-benefits .section-title,
+  .join-form-section h2,
+  .community-stats h2 {
+    font-size: 2rem;
+  }
+  
+  .community-stats .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}

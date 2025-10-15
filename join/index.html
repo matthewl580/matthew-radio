@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Join Us - Matthew Radio</title>
+    <link rel="stylesheet" href="/global/styles.css" />
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="/join/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+    <link rel="icon" href="https://cdn.glitch.global/f81e375a-f3b2-430f-9115-3f352b74f21b/MIR Logo.png?v=1716468410227" />
+    <script src="/theme.js" defer></script>
+  </head>
+  <body>
+    <div id="navBar">
+      <div id="logoBar">
+        <div id="logomarkContainer">
+          <img
+            id="logomark"
+            src="https://cdn.glitch.global/f81e375a-f3b2-430f-9115-3f352b74f21b/MIR Logo.png?v=1716468410227"
+            alt="Matthew Radio Logo"
+          />
+        </div>
+        <div id="brandWordMark">Matthew Radio</div>
+      </div>
+      <div id="navBarOptions">
+        <div class="navBarOption">
+          <span class="material-symbols-rounded">home</span>
+          <span class="optionText"><a href="/" class="nav-link">Home</a></span>
+        </div>
+        <div class="navBarOption">
+          <span class="material-symbols-rounded">play_arrow</span>
+          <span class="optionText"><a href="/play" class="nav-link">Play</a></span>
+        </div>
+        <div class="navBarOption active">
+          <span class="material-symbols-rounded">emoji_people</span>
+          <span class="optionText">Join Us</span>
+        </div>
+        <div class="navBarOption">
+          <span class="material-symbols-rounded">volunteer_activism</span>
+          <span class="optionText">Donate</span>
+        </div>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+          <span class="material-symbols-rounded">dark_mode</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Join Us Hero Section -->
+    <section class="join-hero">
+      <div class="container">
+        <div class="join-content">
+          <h1 class="join-title">Join Our Community</h1>
+          <p class="join-subtitle">Become part of the Matthew Radio family and help us create amazing music experiences</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Benefits of Joining -->
+    <section class="join-benefits">
+      <div class="container">
+        <h2 class="section-title">Why Join Matthew Radio?</h2>
+        <div class="benefits-grid">
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <span class="material-symbols-rounded">mic</span>
+            </div>
+            <h3>DJ Opportunities</h3>
+            <p>Share your music passion by becoming a DJ and curating playlists for our listeners worldwide.</p>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <span class="material-symbols-rounded">forum</span>
+            </div>
+            <h3>Community Access</h3>
+            <p>Connect with fellow music lovers, share recommendations, and participate in exclusive events.</p>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <span class="material-symbols-rounded">music_note</span>
+            </div>
+            <h3>Early Access</h3>
+            <p>Get first access to new tracks, exclusive content, and special programming before anyone else.</p>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <span class="material-symbols-rounded">support</span>
+            </div>
+            <h3>Direct Support</h3>
+            <p>Help us grow by providing feedback, suggesting improvements, and supporting our mission.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Join Form -->
+    <section class="join-form-section">
+      <div class="container">
+        <div class="form-container">
+          <h2>Ready to Join?</h2>
+          <p>Fill out the form below to become part of our community</p>
+          
+          <form class="join-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" name="firstName" required />
+              </div>
+              <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName" name="lastName" required />
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" name="email" required />
+            </div>
+            
+            <div class="form-group">
+              <label for="interests">Music Interests</label>
+              <select id="interests" name="interests" required>
+                <option value="">Select your primary interest</option>
+                <option value="dj">DJ/Curator</option>
+                <option value="listener">Active Listener</option>
+                <option value="artist">Artist/Musician</option>
+                <option value="supporter">Community Supporter</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="message">Tell us about yourself</label>
+              <textarea id="message" name="message" rows="4" placeholder="Share your music background, interests, or how you'd like to contribute..."></textarea>
+            </div>
+            
+            <div class="form-actions">
+              <button type="submit" class="submit-button">
+                <span class="material-symbols-rounded">send</span>
+                Join Our Community
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Community Stats -->
+    <section class="community-stats">
+      <div class="container">
+        <h2>Our Growing Community</h2>
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="stat-number">500+</div>
+            <div class="stat-label">Community Members</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">25+</div>
+            <div class="stat-label">Active DJs</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">50+</div>
+            <div class="stat-label">Artists Featured</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">24/7</div>
+            <div class="stat-label">Community Support</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer id="copyrightText">
+      <p>Copyright Matthew Internet Radio. All rights reserved.</p>
+    </footer>
+  </body>
+</html>
