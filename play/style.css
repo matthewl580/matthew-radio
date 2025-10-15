@@ -1,6 +1,6 @@
 /* Play Page Styles */
 .play-container {
-  padding: 40px 20px 120px 20px; /* Add bottom padding for sticky player */
+  padding: 40px 20px 140px 20px; /* Increased bottom padding for larger sticky player */
   max-width: 1200px;
   margin: 0 auto;
   background-color: var(--bg-primary);
@@ -16,24 +16,19 @@
   border: 1px solid var(--border-color);
 }
 
-.play-header {
-  text-align: center;
-  margin-bottom: 60px;
-}
-
 .play-title {
   font-size: 3rem;
   font-weight: 700;
-  background: linear-gradient(45deg, #1a237e, #0d47a1);
-  background-clip: text;
+  background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary));
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   margin: 0 0 20px 0;
 }
 
 .play-subtitle {
   font-size: 1.2rem;
-  color: var(--md-sys-color-on-background);
+  color: var(--text-secondary);
   opacity: 0.8;
   margin: 0;
 }
@@ -50,7 +45,7 @@
 .stations-section h2 {
   font-size: 2rem;
   font-weight: 600;
-  color: var(--md-sys-color-on-background);
+  color: var(--text-primary);
   margin: 0 0 30px 0;
   text-align: center;
 }
@@ -63,12 +58,12 @@
 }
 
 .substationContainer {
-  background: var(--md-sys-color-surface);
+  background: var(--bg-primary);
   border-radius: 20px;
   padding: 30px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 20px var(--shadow-light);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  border: 1px solid var(--md-sys-color-outline-variant);
+  border: 1px solid var(--border-color);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -77,19 +72,19 @@
 
 .substationContainer:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 30px var(--shadow-medium);
 }
 
 .substationTitle {
   font-size: 1.5rem;
   font-weight: 600;
-  color: var(--md-sys-color-on-surface);
+  color: var(--text-primary);
   margin: 0 0 15px 0;
 }
 
 .substationDescription {
   font-size: 1rem;
-  color: var(--md-sys-color-on-surface-variant);
+  color: var(--text-secondary);
   line-height: 1.6;
   margin: 0 0 20px 0;
   flex-grow: 1;
@@ -108,7 +103,7 @@
   height: 50px;
   border-radius: 50%;
   overflow: hidden;
-  background: var(--md-sys-color-primary-container);
+  background: var(--bg-tertiary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -121,7 +116,7 @@
 }
 
 .tuneInButton {
-  background: linear-gradient(45deg, #1a237e, #0d47a1);
+  background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary));
   color: white;
   border: none;
   border-radius: 25px;
@@ -137,7 +132,7 @@
 
 .tuneInButton:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 25px var(--shadow-heavy);
 }
 
 .grayedOut {
@@ -145,7 +140,7 @@
   filter: grayscale(80%);
 }
 
-/* Now Playing Section - Sticky to Bottom */
+/* Sleek Now Playing Section */
 .now-playing-section {
   position: fixed;
   bottom: 0;
@@ -160,53 +155,169 @@
   backdrop-filter: blur(20px);
 }
 
-.now-playing-section h2 {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin: 0 0 20px 0;
-  text-align: center;
+.now-playing-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+  
+.track-info-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.track-info-card {
-  background: var(--bg-secondary);
-  border-radius: 15px;
-  padding: 20px;
-  box-shadow: 0 4px 20px var(--shadow-light);
-  border: 1px solid var(--border-color);
+.track-details {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex: 1;
 }
 
-.track-info {
-  text-align: center;
-  margin-bottom: 20px;
+.track-title-section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
 }
 
 .track-name {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 600;
-  color: var(--accent-primary);
-  display: block;
-  margin-bottom: 8px;
+  color: var(--text-primary);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .track-author {
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: var(--text-secondary);
   font-style: italic;
-  display: block;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.track-progress {
+.track-controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.control-btn {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: var(--text-primary);
+}
+
+.control-btn:hover:not(:disabled) {
+  background: var(--accent-primary);
+  color: white;
+  transform: scale(1.05);
+}
+
+.control-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.control-btn .material-symbols-rounded {
+  font-size: 20px;
+}
+
+/* Progress Section */
+.progress-section {
   width: 100%;
 }
 
+.progress-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+}
+
+.time-display {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  min-width: 40px;
+  text-align: center;
+}
+
+.progress-bar-container {
+  flex: 1;
+  position: relative;
+  height: 20px;
+  display: flex;
+  align-items: center;
+}
+
+/* Audio Visualizer */
+.audio-visualizer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  opacity: 0.6;
+  z-index: 1;
+}
+
+.visualizer-bar {
+  width: 3px;
+  background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary));
+  border-radius: 2px;
+  height: 8px;
+  animation: visualizerPulse 1.5s ease-in-out infinite;
+}
+
+.visualizer-bar:nth-child(1) { animation-delay: 0s; }
+.visualizer-bar:nth-child(2) { animation-delay: 0.1s; }
+.visualizer-bar:nth-child(3) { animation-delay: 0.2s; }
+.visualizer-bar:nth-child(4) { animation-delay: 0.3s; }
+.visualizer-bar:nth-child(5) { animation-delay: 0.4s; }
+.visualizer-bar:nth-child(6) { animation-delay: 0.5s; }
+.visualizer-bar:nth-child(7) { animation-delay: 0.6s; }
+.visualizer-bar:nth-child(8) { animation-delay: 0.7s; }
+
+@keyframes visualizerPulse {
+  0%, 100% { 
+    height: 8px; 
+    opacity: 0.6;
+  }
+  50% { 
+    height: 16px; 
+    opacity: 1;
+  }
+}
+
+/* Progress Bar */
 #trackProgressMeter {
   width: 100%;
   height: 6px;
   border-radius: 3px;
   background: var(--bg-tertiary);
   appearance: none;
-  margin-bottom: 8px;
+  position: relative;
+  z-index: 2;
 }
 
 #trackProgressMeter::-webkit-progress-bar {
@@ -217,13 +328,23 @@
 #trackProgressMeter::-webkit-progress-value {
   background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary));
   border-radius: 3px;
+  position: relative;
 }
 
-.time-info {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.85rem;
-  color: var(--text-muted);
+#trackProgressMeter::-webkit-progress-value::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }
 
 /* Responsive Design */
@@ -238,11 +359,41 @@
   }
   
   .play-container {
-    padding: 20px 15px;
+    padding: 20px 15px 160px 15px;
   }
   
-  .now-playing-section {
-    padding: 30px 20px;
+  .now-playing-container {
+    gap: 15px;
+  }
+  
+  .track-details {
+    gap: 15px;
+  }
+  
+  .track-name {
+    font-size: 1rem;
+  }
+  
+  .track-author {
+    font-size: 0.85rem;
+  }
+  
+  .control-btn {
+    width: 35px;
+    height: 35px;
+  }
+  
+  .control-btn .material-symbols-rounded {
+    font-size: 18px;
+  }
+  
+  .progress-container {
+    gap: 10px;
+  }
+  
+  .time-display {
+    font-size: 0.8rem;
+    min-width: 35px;
   }
 }
 
@@ -251,8 +402,21 @@
     font-size: 2rem;
   }
   
-  .stations-section h2,
-  .now-playing-section h2 {
+  .stations-section h2 {
     font-size: 1.5rem;
+  }
+  
+  .track-details {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .track-controls {
+    align-self: flex-end;
+  }
+  
+  .now-playing-container {
+    gap: 12px;
   }
 }

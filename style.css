@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
-/* CSS Custom Properties for Theme System */
+/* CSS Custom Properties for Dark Mode Only */
 :root {
   /* Dark Mode Colors - Default Theme */
   --bg-primary: #0a0a0a;
@@ -19,26 +19,6 @@
   --success: #4caf50;
   --error: #f44336;
   --warning: #ff9800;
-}
-
-[data-theme="light"] {
-  /* Light Mode Colors */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --bg-tertiary: #e9ecef;
-  --text-primary: #212529;
-  --text-secondary: #6c757d;
-  --text-muted: #adb5bd;
-  --border-color: #dee2e6;
-  --shadow-light: rgba(0, 0, 0, 0.1);
-  --shadow-medium: rgba(0, 0, 0, 0.15);
-  --shadow-heavy: rgba(0, 0, 0, 0.25);
-  --accent-primary: #1a237e;
-  --accent-secondary: #0d47a1;
-  --accent-light: #e3f2fd;
-  --success: #28a745;
-  --error: #dc3545;
-  --warning: #ffc107;
 }
 
 
@@ -83,7 +63,7 @@ body {
 .hero-title {
   font-size: 3.5rem;
   font-weight: 700;
-  background: linear-gradient(45deg, #ffffff, var(--accent-light));
+  background: white;
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -312,6 +292,8 @@ body {
   border: 2px solid transparent;
   position: relative;
   overflow: hidden;
+  background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary)) !important;
+
 }
 
 .cta-button.primary {
@@ -504,31 +486,7 @@ body {
   opacity: 0.8;
 }
 
-/* Theme Toggle Button */
-.theme-toggle {
-  background: var(--bg-tertiary);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  margin-left: 10px;
-}
-
-.theme-toggle:hover {
-  background: var(--accent-primary);
-  color: white;
-  transform: scale(1.05);
-}
-
-.theme-toggle .material-symbols-rounded {
-  font-size: 20px;
-}
+/* Theme Toggle Button - Removed */
 
 #logomarkContainer {
   width: 45px;

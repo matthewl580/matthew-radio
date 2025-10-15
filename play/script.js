@@ -3,9 +3,32 @@ var nextAudioElement = new Audio(); // Create a second audio element for preload
 let uiUpdateInterval; // Interval for UI updates and continuous data fetching
 let preloadedNextSegmentSrc = {}; // Stores the SRC of the *next* segment once preloaded
 let currentlyPlayingStation = null; // Track the name of the currently active station
+let visualizerInterval; // Interval for visualizer animation
+let isPlaying = false; // Track playing state
+
+// Get UI elements
+const playPauseBtn = document.getElementById("playPauseBtn");
+const stopBtn = document.getElementById("stopBtn");
+const visualizerBars = document.querySelectorAll(".visualizer-bar");
 
 
-audioElement.onended = function () {
+// Audio event handlers
+audioElement.onplay = function() {
+    isPlaying = true;
+    updatePlayPauseButton();
+    startVisualizer();
+};
+
+audioElement.onpause = function() {
+    isPlaying = false;
+    updatePlayPauseButton();
+    stopVisualizer();
+};
+
+audioElement.onended = function() {
+    isPlaying = false;
+    updatePlayPauseButton();
+    stopVisualizer();
     console.log("Segment ended for current audio element.");
     let currentStationName = document.getElementById("trackName").dataset.station;
 
@@ -31,6 +54,72 @@ audioElement.onended = function () {
         fetchAndUpdateStationData(currentStationName, true); // Pass true to force immediate play
     }
 };
+
+// Control button handlers
+playPauseBtn.addEventListener('click', function() {
+    if (currentlyPlayingStation) {
+        if (isPlaying) {
+            audioElement.pause();
+        } else {
+            audioElement.play();
+        }
+    }
+});
+
+stopBtn.addEventListener('click', function() {
+    audioElement.pause();
+    audioElement.currentTime = 0;
+    clearInterval(uiUpdateInterval);
+    currentlyPlayingStation = null;
+    stopVisualizer();
+    resetUI();
+});
+
+// Visualizer functions
+function startVisualizer() {
+    stopVisualizer(); // Clear any existing interval
+    visualizerInterval = setInterval(animateVisualizer, 150);
+}
+
+function stopVisualizer() {
+    if (visualizerInterval) {
+        clearInterval(visualizerInterval);
+        visualizerInterval = null;
+    }
+    // Reset visualizer bars to default state
+    visualizerBars.forEach(bar => {
+        bar.style.height = '8px';
+        bar.style.opacity = '0.6';
+    });
+}
+
+function animateVisualizer() {
+    visualizerBars.forEach((bar, index) => {
+        const height = Math.random() * 12 + 4; // Random height between 4px and 16px
+        const opacity = Math.random() * 0.4 + 0.6; // Random opacity between 0.6 and 1
+        bar.style.height = height + 'px';
+        bar.style.opacity = opacity;
+    });
+}
+
+function updatePlayPauseButton() {
+    const icon = playPauseBtn.querySelector('.material-symbols-rounded');
+    if (isPlaying) {
+        icon.textContent = 'pause';
+    } else {
+        icon.textContent = 'play_arrow';
+    }
+}
+
+function resetUI() {
+    document.getElementById("trackName").textContent = "Select a station to start listening";
+    document.getElementById("trackAuthor").textContent = "";
+    document.getElementById("trackCurrentPosition").textContent = "0:00";
+    document.getElementById("trackDuration").textContent = "0:00";
+    document.getElementById("trackProgressMeter").value = 0;
+    playPauseBtn.disabled = true;
+    stopBtn.disabled = true;
+}
 
 
 /**
@@ -73,9 +162,12 @@ function tuneIn(substationName) {
     console.log(`Tuning into ${substationName}.`);
     currentlyPlayingStation = substationName; // Keep track of the active station
 
-
     clearInterval(uiUpdateInterval); // Clear any existing interval from previous station
+    stopVisualizer(); // Stop any existing visualizer
 
+    // Enable control buttons
+    playPauseBtn.disabled = false;
+    stopBtn.disabled = false;
 
     // Initial fetch to get current track info and start playback
     getAllTrackInformation((allTrackObjects) => {
@@ -87,16 +179,13 @@ function tuneIn(substationName) {
             audioElement.play();
             console.log(`Playing initial segment: ${trackObject.currentSegment.SRC} from position ${trackObject.currentSegment.position}`);
 
-
             // Preload the next segment based on this initial fetch
             preloadNextSegment(trackObject, substationName);
-
 
         } else {
             console.error(`Track object not found for station: ${substationName} on tune-in.`);
         }
     });
-
 
     // Set up the interval for continuous UI updates and preloading
     uiUpdateInterval = setInterval(function () {
@@ -239,6 +328,10 @@ function formatTime(time = 0) {
 
 // Initial setup for the UI when the page loads
 document.addEventListener('DOMContentLoaded', () => {
+    // Initialize control buttons as disabled
+    playPauseBtn.disabled = true;
+    stopBtn.disabled = true;
+    
     // These hardcoded calls create the initial station selection UI.
     // In a dynamic scenario, you might call getAllTrackInformation here once
     // to populate these dynamically, but given the existing structure,
