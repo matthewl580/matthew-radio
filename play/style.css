@@ -144,7 +144,9 @@
   opacity: 0.6;
   filter: grayscale(80%);
 }
-
+.audio-visualizer{
+  height: 0px;
+}
 /* Now Playing Section - Sticky to Bottom */
 .now-playing-section {
   position: fixed;
@@ -158,6 +160,7 @@
   z-index: 100;
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
+  height: 300px !important;
 }
 
 .now-playing-section h2 {
