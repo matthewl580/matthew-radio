@@ -58,28 +58,32 @@
 
       <div id="nowPlayingUI" class="now-playing-section">
         <div class="now-playing-card">
-          <img id="trackArtwork" class="track-artwork" src="https://cdn.glitch.global/f81e375a-f3b2-430f-9115-3f352b74f21b/WR%20Substation%20Icon.png?v=1716472186074" alt="Now playing artwork" />
           <div class="now-playing-meta">
             <div class="track-title-row">
-              <div>
+              <div class="track-title-left">
                 <span id="trackName" class="track-name">Select a station to start listening</span>
-                <span id="trackAuthor" class="track-author"></span>
+                <span id="trackAuthor" class="track-author">by Nobody</span>
               </div>
-              <div class="track-controls">
-                <button id="playPauseBtn" class="control-btn" disabled>
-                  <span class="material-symbols-rounded">play_arrow</span>
-                </button>
-                <button id="stopBtn" class="control-btn" disabled>
-                  <span class="material-symbols-rounded">stop</span>
-                </button>
-              </div>
+              <img id="trackArtwork" class="track-artwork" src="https://cdn.glitch.global/f81e375a-f3b2-430f-9115-3f352b74f21b/WR%20Substation%20Icon.png?v=1716472186074" alt="Now playing artwork" />
             </div>
+
             <div class="progress-row">
               <span id="trackCurrentPosition" class="time-display">0:00</span>
               <div class="progress-bar-container">
                 <progress id="trackProgressMeter" value="0" max="100"></progress>
               </div>
               <span id="trackDuration" class="time-display">0:00</span>
+            </div>
+          </div>
+
+          <div class="now-playing-actions">
+            <div class="track-controls">
+              <button id="playPauseBtn" class="control-btn" disabled>
+                <span class="material-symbols-rounded">play_arrow</span>
+              </button>
+              <button id="stopBtn" class="control-btn" disabled>
+                <span class="material-symbols-rounded">stop</span>
+              </button>
             </div>
           </div>
         </div>
