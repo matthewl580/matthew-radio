@@ -5,6 +5,8 @@ let preloadedNextSegmentSrc = {}; // Stores the SRC of the *next* segment once p
 let currentlyPlayingStation = null; // Track the name of the currently active station
 let visualizerInterval; // Interval for visualizer animation
 let isPlaying = false; // Track playing state
+// Per-page station state (used by UI and for preloads)
+let stationState = {};
 
 // Get UI elements
 const playPauseBtn = document.getElementById("playPauseBtn");
@@ -133,6 +135,42 @@ function fetchAndUpdateStationData(stationName, forcePlay = false) {
         const trackObject = allTrackObjects[stationName];
         if (trackObject) {
             populateUI(trackObject, stationName);
+            // If we're currently tuned to this station, ensure our audio follows the
+            // server's reported current segment. If the server has advanced to a
+            // different segment than the one currently loaded, switch to it and
+            // sync playback state/position.
+            try {
+                const incomingSrc = trackObject.currentSegment && trackObject.currentSegment.SRC;
+                const incomingPos = trackObject.currentSegment && trackObject.currentSegment.position;
+                if (stationName === currentlyPlayingStation && incomingSrc) {
+                    // If the audio element has a different src than the server's
+                    // current segment, switch to the server's version.
+                    if (audioElement.src !== incomingSrc) {
+                        console.log(`Server advanced segment for ${stationName}; switching to server's segment: ${incomingSrc}`);
+                        const wasPlaying = isPlaying;
+                        audioElement.src = incomingSrc;
+                        // If the server provided a position, sync to it (fallback to 0)
+                        audioElement.currentTime = typeof incomingPos === 'number' ? incomingPos : 0;
+                        // Resume playback only if we were playing before the change.
+                        if (wasPlaying) {
+                            audioElement.play().catch(err => console.warn('Could not auto-play after server switch:', err));
+                        }
+                        // Clear any previously-stored preload for this station since
+                        // we've moved to the new segment.
+                        preloadedNextSegmentSrc[stationName] = null;
+                    } else {
+                        // If the src is the same, try to keep position roughly in sync
+                        // with the server (within a small tolerance) so UI and playback
+                        // show consistent timing.
+                        const serverPos = typeof trackObject.currentSegment.position === 'number' ? trackObject.currentSegment.position : null;
+                        if (serverPos !== null && Math.abs((audioElement.currentTime || 0) - serverPos) > 1.0) {
+                            audioElement.currentTime = serverPos;
+                        }
+                    }
+                }
+            } catch (err) {
+                console.error('Error syncing audio to server segment:', err);
+            }
            
             // If forced to play immediately (e.g., segment ended and no preload)
             if (forcePlay) {
@@ -257,39 +295,87 @@ async function getAllTrackInformation(func = () => { }) {
 
 
 function createStationUI(title, desc, logoLink, availableToPlay, stationName) {
-    let actionButton = `<div class="tuneInButton" onclick="tuneIn('${stationName}')">
-        <span class="tuneInButtonIcon material-symbols-rounded">
-            play_arrow
-        </span>
-    </div>
-    `;
-    if (!availableToPlay) {
-        actionButton = `<div class="tuneInButton"> </div>
-            <span class="tuneInButtonIcon material-symbols-rounded">
-                signal_disconnected
-            </span>
-            <span class="tuneInButtonText grayedOut">Unavailable</span>
-        </div>`;
+    const container = document.createElement('div');
+    container.className = 'substationContainer';
+
+    const logoAndPlay = document.createElement('div');
+    logoAndPlay.className = 'logoAndPlayContainer';
+
+    const tuneBtn = document.createElement('div');
+    tuneBtn.className = 'tuneInButton';
+    if (availableToPlay) {
+        const icon = document.createElement('span');
+        icon.className = 'tuneInButtonIcon material-symbols-rounded';
+        icon.textContent = 'play_arrow';
+        tuneBtn.appendChild(icon);
+        tuneBtn.addEventListener('click', () => tuneIn(stationName));
+    } else {
+        const icon = document.createElement('span');
+        icon.className = 'tuneInButtonIcon material-symbols-rounded';
+        icon.textContent = 'signal_disconnected';
+        const txt = document.createElement('span');
+        txt.className = 'tuneInButtonText grayedOut';
+        txt.textContent = 'Unavailable';
+        tuneBtn.appendChild(icon);
+        tuneBtn.appendChild(txt);
     }
-    document.getElementById(
-        "substationList"
-    ).innerHTML += `
-    <div class="substationContainer">
-    <div class="logoAndPlayContainer">
-                ${actionButton}
 
-     <div class="substationLogoContainer">
-                    <img
-                        class="substationLogo"
-                        src="${logoLink}"
-                    />
-                </div>
-            </div>
-                            <div class="substationTitle">${title}</div>
+    const logoDiv = document.createElement('div');
+    logoDiv.className = 'substationLogoContainer';
+    const img = document.createElement('img');
+    img.className = 'substationLogo';
+    img.src = logoLink || 'https://cdn.glitch.global/f81e375a-f3b2-430f-9115-3f352b74f21b/WR%20Substation%20Icon.png?v=1716472186074';
+    img.alt = title + ' logo';
+    logoDiv.appendChild(img);
 
-            <div class="substationDescription">${desc}</div>
-            
-        </div>`;
+    logoAndPlay.appendChild(tuneBtn);
+    logoAndPlay.appendChild(logoDiv);
+
+    const titleEl = document.createElement('div');
+    titleEl.className = 'substationTitle';
+    titleEl.textContent = title;
+
+    const descEl = document.createElement('div');
+    descEl.className = 'substationDescription';
+    descEl.textContent = desc;
+
+    container.appendChild(logoAndPlay);
+    container.appendChild(titleEl);
+    container.appendChild(descEl);
+
+    document.getElementById('substationList').appendChild(container);
+}
+
+// Load stations from server and populate the UI. Falls back to an empty list on error.
+function loadStations() {
+    getAllStations((stations) => {
+        const listEl = document.getElementById('substationList');
+        if (!listEl) return;
+        listEl.innerHTML = '';
+        if (!Array.isArray(stations)) {
+            console.error('Stations endpoint did not return an array:', stations);
+            return;
+        }
+        stations.forEach(st => {
+            // Use station properties; provide defaults where missing
+            const name = st.name || 'Unknown Station';
+            const desc = st.description || '';
+            const logo = st.logo || ''; // if server provides logo
+            const available = true;
+            createStationUI(name, desc, logo, available, name);
+            // store initial trackList in stationState for play page features
+            stationState = stationState || {};
+            stationState[name] = stationState[name] || {};
+            stationState[name].currentList = Array.isArray(st.trackList) ? st.trackList.slice() : [];
+        });
+    });
+}
+
+// Helper to fetch /stations
+function getAllStations(callback = () => {}) {
+    fetchDataFromServer('/stations', (data) => {
+        callback(data);
+    });
 }
 
 
@@ -331,64 +417,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize control buttons as disabled
     playPauseBtn.disabled = true;
     stopBtn.disabled = true;
-    
-    // These hardcoded calls create the initial station selection UI.
-    // In a dynamic scenario, you might call getAllTrackInformation here once
-    // to populate these dynamically, but given the existing structure,
-    // they remain as is for creating the UI elements themselves.
+    // Populate the station selection UI from server
+    loadStations();
 });
-
-
-// Hardcoded createStationUI calls as in your original snippet.
-createStationUI(
-    "Wildflower Radio",
-    "The perfect mixing bag. You'll never know what you're going to get!",
-    "https://cdn.glitch.global/f81e375a-f3b2-430f-9115-3f352b74f21b/WR%20Substation%20Icon.png?v=1716472186074",
-    true,
-    "Radio Wildflower"
-);
-createStationUI(
-    "Legion Lofi",
-    "Rally behind this air force style Lofi Metal.",
-    "https://cdn.glitch.global/f81e375a-f3b2-430f-9115-3f352b74f21b/WR%20Substation%20Icon.png?v=1716472186074",
-    true,
-    "Legion Lofi"  
-);
-createStationUI(
-    "Alarm Hub",
-    "Literally just alarms",
-    "https://cdn.glitch.global/f81e375a-f3b2-430f-9115-3f352b74f21b/WR%20Substation%20Icon.png?v=1716472186074",
-    true,
-    "Alarm Hub"  
-);
-createStationUI(
-    "Hue Jazz",
-    "Colors and shades of Jazz, from the blues to... the other ones.",
-    "https://cdn.glitch.global/f81e375a-f3b2-430f-9115-3f352b74f21b/WR%20Substation%20Icon.png?v=1716472186074",
-    true,
-    "Hue Jazz"  
-);
-createStationUI(
-    "Meet Mindseye",
-    "Meet Mineseye, a New Zealand-based record producer, visual artist, and DJ with Dutch roots.",
-    "https://cdn.glitch.global/f81e375a-f3b2-430f-9115-3f352b74f21b/WR%20Substation%20Icon.png?v=1716472186074",
-    true,
-    "Meet Mindseye"  
-);
-createStationUI(
-    "Motivational Melodies",
-    "All the motivation, without all the lyrics! Time to get it done!",
-    "https://cdn.glitch.global/f81e375a-f3b2-430f-9115-3f352b74f21b/WR%20Substation%20Icon.png?v=1716472186074",
-    true,
-    "Motivational Melodies"  
-);
-createStationUI(
-    "Background Rock",
-    "Corporate background pop gets a taste of energy... with a side of electric guitar!",
-    "https://cdn.glitch.global/f81e375a-f3b2-430f-9115-3f352b74f21b/WR%20Substation%20Icon.png?v=1716472186074",
-    true,
-    "Background Rock"  
-);
 
 
 
