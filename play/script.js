@@ -143,25 +143,40 @@ function fetchAndUpdateStationData(stationName, forcePlay = false) {
                 const incomingSrc = trackObject.currentSegment && trackObject.currentSegment.SRC;
                 const incomingPos = trackObject.currentSegment && trackObject.currentSegment.position;
                 if (stationName === currentlyPlayingStation && incomingSrc) {
-                    // If the audio element has a different src than the server's
-                    // current segment, switch to the server's version.
-                    if (audioElement.src !== incomingSrc) {
-                        console.log(`Server advanced segment for ${stationName}; switching to server's segment: ${incomingSrc}`);
+                    // Normalize incoming SRC to an absolute URL so comparisons are reliable.
+                    let incomingHref;
+                    try {
+                        incomingHref = new URL(incomingSrc, location.href).href;
+                    } catch (e) {
+                        incomingHref = incomingSrc;
+                    }
+
+                    const srcDiffers = audioElement.src !== incomingHref;
+
+                    // If we're currently playing, don't interrupt the current segment.
+                    // Instead, set up the server-provided SRC as the next/preloaded segment
+                    // so it will start when the current audio ends (and it will start at 0).
+                    if (isPlaying && srcDiffers) {
+                        console.log(`Server advanced segment for ${stationName} while playing; will switch after current finishes: ${incomingHref}`);
+                        // Preload into the nextAudio element and mark it for onended to pick up.
+                        try {
+                            nextAudioElement.src = incomingHref;
+                        } catch (e) {
+                            console.warn('Could not set nextAudioElement.src for preload:', e);
+                        }
+                        preloadedNextSegmentSrc[stationName] = incomingHref;
+                    } else if (srcDiffers) {
+                        // Not currently playing: switch immediately but start the new segment from 0
+                        console.log(`Server advanced segment for ${stationName}; switching immediately to server's segment: ${incomingHref}`);
                         const wasPlaying = isPlaying;
-                        audioElement.src = incomingSrc;
-                        // If the server provided a position, sync to it (fallback to 0)
-                        audioElement.currentTime = typeof incomingPos === 'number' ? incomingPos : 0;
-                        // Resume playback only if we were playing before the change.
+                        audioElement.src = incomingHref;
+                        audioElement.currentTime = 0; // start server segment at 0 as requested
                         if (wasPlaying) {
                             audioElement.play().catch(err => console.warn('Could not auto-play after server switch:', err));
                         }
-                        // Clear any previously-stored preload for this station since
-                        // we've moved to the new segment.
                         preloadedNextSegmentSrc[stationName] = null;
                     } else {
-                        // If the src is the same, try to keep position roughly in sync
-                        // with the server (within a small tolerance) so UI and playback
-                        // show consistent timing.
+                        // If the src is the same, keep position roughly in sync with the server
                         const serverPos = typeof trackObject.currentSegment.position === 'number' ? trackObject.currentSegment.position : null;
                         if (serverPos !== null && Math.abs((audioElement.currentTime || 0) - serverPos) > 1.0) {
                             audioElement.currentTime = serverPos;

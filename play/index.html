@@ -19,7 +19,7 @@
     <script src="/play/script.js" defer></script>
   </head>
   <body>
-    <div id="navBar">
+    <nav id="navBar" aria-label="Main navigation">
       <div id="logoBar">
         <div id="logomarkContainer">
           <img
@@ -30,21 +30,19 @@
         </div>
         <div id="brandWordMark">Matthew Radio</div>
       </div>
-      <div id="navBarOptions">
-        <div class="navBarOption">
-          <span class="material-symbols-rounded">home</span>
-          <span class="optionText"><a href="/" class="nav-link">Home</a></span>
-        </div>
-        <div class="navBarOption">
-          <span class="material-symbols-rounded">emoji_people</span>
-          <span class="optionText"><a href="/join" class="nav-link">Join Us</a></span>
-        </div>
-        <div class="navBarOption">
-          <span class="material-symbols-rounded">volunteer_activism</span>
-          <span class="optionText">Donate</span>
-        </div>
+
+      <button id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navBarOptions" class="nav-toggle">
+        <span class="material-symbols-rounded">menu</span>
+      </button>
+
+      <div id="navBarOptions" role="menubar">
+        <a href="/" class="navBarOption nav-link" role="menuitem"><span class="material-symbols-rounded">home</span><span class="optionText">Home</span></a>
+        <a href="/play" class="navBarOption nav-link" role="menuitem"><span class="material-symbols-rounded">play_arrow</span><span class="optionText">Play</span></a>
+        <a href="/join" class="navBarOption nav-link" role="menuitem"><span class="material-symbols-rounded">emoji_people</span><span class="optionText">Join</span></a>
+        <a href="/admin" class="navBarOption nav-link" role="menuitem"><span class="material-symbols-rounded">admin_panel_settings</span><span class="optionText">Admin</span></a>
+        <a href="/donate" class="navBarOption nav-link" role="menuitem"><span class="material-symbols-rounded">volunteer_activism</span><span class="optionText">Donate</span></a>
       </div>
-    </div>
+    </nav>
 
     <!-- Main Content -->
     <div class="play-container">
@@ -59,10 +57,11 @@
       </div>
 
       <div id="nowPlayingUI" class="now-playing-section">
-        <div class="now-playing-container">
-          <div class="track-info-section">
-            <div class="track-details">
-              <div class="track-title-section">
+        <div class="now-playing-card">
+          <img id="trackArtwork" class="track-artwork" src="https://cdn.glitch.global/f81e375a-f3b2-430f-9115-3f352b74f21b/WR%20Substation%20Icon.png?v=1716472186074" alt="Now playing artwork" />
+          <div class="now-playing-meta">
+            <div class="track-title-row">
+              <div>
                 <span id="trackName" class="track-name">Select a station to start listening</span>
                 <span id="trackAuthor" class="track-author"></span>
               </div>
@@ -75,22 +74,9 @@
                 </button>
               </div>
             </div>
-          </div>
-          
-          <div class="progress-section">
-            <div class="progress-container">
+            <div class="progress-row">
               <span id="trackCurrentPosition" class="time-display">0:00</span>
               <div class="progress-bar-container">
-                <div class="audio-visualizer">
-                  <div class="visualizer-bar"></div>
-                  <div class="visualizer-bar"></div>
-                  <div class="visualizer-bar"></div>
-                  <div class="visualizer-bar"></div>
-                  <div class="visualizer-bar"></div>
-                  <div class="visualizer-bar"></div>
-                  <div class="visualizer-bar"></div>
-                  <div class="visualizer-bar"></div>
-                </div>
                 <progress id="trackProgressMeter" value="0" max="100"></progress>
               </div>
               <span id="trackDuration" class="time-display">0:00</span>
@@ -101,6 +87,26 @@
     </div>
 
     <audio id="audio" src=""></audio>
+
+    <script>
+      // Mobile nav toggle (copied from root for consistent behavior)
+      (function(){
+        const toggle = document.getElementById('navToggle');
+        const menu = document.getElementById('navBarOptions');
+        if (!toggle || !menu) return;
+        toggle.addEventListener('click', () => {
+          const open = menu.classList.toggle('open');
+          toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+        // Close menu when clicking outside on small screens
+        document.addEventListener('click', (e) => {
+          if (!menu.classList.contains('open')) return;
+          if (e.target.closest('#navBar')) return;
+          menu.classList.remove('open');
+          toggle.setAttribute('aria-expanded', 'false');
+        });
+      })();
+    </script>
 
     <footer id="copyrightText">
       <p>Copyright Matthew Internet Radio. All rights reserved.</p>
