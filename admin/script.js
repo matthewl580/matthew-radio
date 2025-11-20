@@ -211,7 +211,8 @@ function createStationDiv(stationName, trackObject) {
   if (!stationState[stationName]) {
     stationState[stationName] = { currentList: extractTrackList(trackObject), selected: '' };
   }
-  const currentList = stationState[stationName].currentList;
+  // use stationState[stationName].currentList dynamically so updates persist across refreshes
+  // (do not create a separate local copy that could become stale)
 
   // Tracklist title + list
   const listTitle = document.createElement('div');
@@ -234,9 +235,19 @@ function createStationDiv(stationName, trackObject) {
       `;
       ul.appendChild(li);
     });
+    // update next-3 preview if present
+    const parent = ul.parentElement;
+    if (parent) {
+      const nextEl = parent.querySelector('.tracklist-next');
+      if (nextEl) {
+        const nextThree = (arr || []).slice(0,3);
+        const remaining = Math.max(0, (arr || []).length - 3);
+        nextEl.innerHTML = `<strong>Next:</strong> ${nextThree.map(n => `<span class="next-name">${n}</span>`).join(', ')}${remaining>0 ? ` <em>and ${remaining} more</em>` : ''}`;
+      }
+    }
   };
 
-  renderList(currentList);
+  renderList(stationState[stationName].currentList || []);
 
   // Add controls: select available server tracks and add button
   const controls = document.createElement('div');
@@ -298,8 +309,8 @@ function createStationDiv(stationName, trackObject) {
     if (!del) return;
     const idx = Number(del.dataset.index);
     if (Number.isNaN(idx)) return;
-    const updated = currentList.slice();
-    const removed = updated.splice(idx, 1);
+  const updated = (stationState[stationName].currentList || []).slice();
+  const removed = updated.splice(idx, 1);
     // update UI immediately
     renderList(updated);
     // send update to server
@@ -381,8 +392,8 @@ async function fetchServerTrackNames() {
 
 // Send updated track list for station to server
 async function updateTrackListOnServer(stationName, trackList) {
-  // The endpoint accepts either a string or an array for trackList.
-  const body = { stationName, trackList: Array.isArray(trackList) && trackList.length === 1 ? trackList[0] : trackList };
+  // Ensure we always send an array for trackList (server expects array form)
+  const body = { stationName, trackList: Array.isArray(trackList) ? trackList : [trackList] };
   const resp = await fetch('https://wildflower-radio-zj59.onrender.com/admin/editTrackList', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
