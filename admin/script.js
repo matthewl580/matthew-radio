@@ -126,11 +126,11 @@ function updateStationDiv(stationDiv, trackObject) {
       }
 
       const state = stationState[name];
-      const nextEl = stationDiv.querySelector('.tracklist-next');
-      if (nextEl) {
-        const nextThree = (state.currentList || []).slice(0,3);
+      // Update remaining count element (next items are badges inside the list)
+      const remEl = stationDiv.querySelector('.tracklist-remaining');
+      if (remEl) {
         const remaining = Math.max(0, (state.currentList || []).length - 3);
-        nextEl.innerHTML = `<strong>Next:</strong> ${nextThree.map(n => `<span class="next-name">${n}</span>`).join(', ')}${remaining>0 ? ` <em>and ${remaining} more</em>` : ''}`;
+        remEl.innerHTML = remaining > 0 ? `<em>and ${remaining} more</em>` : '';
       }
     }
   } catch (e) {
@@ -229,20 +229,22 @@ function createStationDiv(stationName, trackObject) {
       const li = document.createElement('li');
       li.className = 'tracklist-item';
       li.dataset.index = idx;
+      const badge = idx < 3 ? `<span class="next-badge">Next</span>` : '';
       li.innerHTML = `
+        ${badge}
         <span class="track-name">${t}</span>
         <button class="delete-track" data-index="${idx}" title="Delete track">🗑️</button>
       `;
+      if (idx < 3) li.classList.add('next-item');
       ul.appendChild(li);
     });
-    // update next-3 preview if present
+    // update remaining count element
     const parent = ul.parentElement;
     if (parent) {
-      const nextEl = parent.querySelector('.tracklist-next');
-      if (nextEl) {
-        const nextThree = (arr || []).slice(0,3);
+      const remEl = parent.querySelector('.tracklist-remaining');
+      if (remEl) {
         const remaining = Math.max(0, (arr || []).length - 3);
-        nextEl.innerHTML = `<strong>Next:</strong> ${nextThree.map(n => `<span class="next-name">${n}</span>`).join(', ')}${remaining>0 ? ` <em>and ${remaining} more</em>` : ''}`;
+        remEl.innerHTML = remaining > 0 ? `<em>and ${remaining} more</em>` : '';
       }
     }
   };
@@ -267,14 +269,13 @@ function createStationDiv(stationName, trackObject) {
   trackListContainer.appendChild(ul);
   trackListContainer.appendChild(controls);
 
-  // Next-3 preview
-  const nextPreview = document.createElement('div');
-  nextPreview.className = 'tracklist-next';
+  // Remaining count element (next-3 are shown inline in list as badges)
+  const remainingEl = document.createElement('div');
+  remainingEl.className = 'tracklist-remaining';
   const stateList = (stationState[stationName] && stationState[stationName].currentList) || [];
-  const nextThree = (stateList || []).slice(0,3);
   const remaining = Math.max(0, (stateList || []).length - 3);
-  nextPreview.innerHTML = `<strong>Next:</strong> ${nextThree.map(n => `<span class="next-name">${n}</span>`).join(', ')}${remaining>0 ? ` <em>and ${remaining} more</em>` : ''}`;
-  trackListContainer.appendChild(nextPreview);
+  remainingEl.innerHTML = remaining > 0 ? `<em>and ${remaining} more</em>` : '';
+  trackListContainer.appendChild(remainingEl);
 
   stationDiv.appendChild(trackListContainer);
 
@@ -316,10 +317,10 @@ function createStationDiv(stationName, trackObject) {
     renderList(updated);
     // send update to server
     try {
-      const resp = await updateTrackListOnServer(stationName, updated);
-      if (resp && resp.success) {
-        showSuccess(`Removed track: ${removed[0]}`);
-        showToast('Radio track list updated');
+        const resp = await updateTrackListOnServer(stationName, updated);
+        if (resp && resp.success) {
+          showSuccess(`Removed track: ${removed[0]}`);
+          showToast(resp.data && resp.data.message ? resp.data.message : 'Radio track list updated', 3000, 'success');
         // update our local copy
         stationState[stationName].currentList = updated.slice();
         // update currentList local reference
@@ -328,11 +329,13 @@ function createStationDiv(stationName, trackObject) {
         populateRadioStationList();
       } else {
         showError('Failed to update server track list.');
+        showToast('Failed to update server track list', 3000, 'error');
         // revert UI
         renderList(stationState[stationName].currentList || []);
       }
     } catch (err) {
       showError('Error updating server track list.');
+      showToast('Error updating server track list', 3000, 'error');
       renderList(stationState[stationName].currentList || []);
     }
   });
@@ -353,20 +356,22 @@ function createStationDiv(stationName, trackObject) {
     const updated = (stationState[stationName].currentList || []).concat([chosen]);
     renderList(updated);
     try {
-      const resp = await updateTrackListOnServer(stationName, updated);
-      if (resp && resp.success) {
-        showSuccess(`Added track: ${chosen}`);
-        showToast('Radio track list updated');
-        stationState[stationName].currentList = updated.slice();
-        // refresh so server-authoritative shapes are rendered
-        populateRadioStationList();
-      } else {
-        showError('Failed to update server track list.');
-        renderList(stationState[stationName].currentList || []);
-      }
+        const resp = await updateTrackListOnServer(stationName, updated);
+        if (resp && resp.success) {
+          showSuccess(`Added track: ${chosen}`);
+          showToast(resp.data && resp.data.message ? resp.data.message : 'Radio track list updated', 3000, 'success');
+          stationState[stationName].currentList = updated.slice();
+          // refresh so server-authoritative shapes are rendered
+          populateRadioStationList();
+        } else {
+          showError('Failed to update server track list.');
+          showToast('Failed to update server track list', 3000, 'error');
+          renderList(stationState[stationName].currentList || []);
+        }
     } catch (err) {
-      showError('Error updating server track list.');
-      renderList(stationState[stationName].currentList || []);
+        showError('Error updating server track list.');
+        showToast('Error updating server track list', 3000, 'error');
+        renderList(stationState[stationName].currentList || []);
     }
   });
 
@@ -394,22 +399,28 @@ async function fetchServerTrackNames() {
 
 // Send updated track list for station to server
 async function updateTrackListOnServer(stationName, trackList) {
-  // Ensure we always send an array for trackList (server expects array form)
-  const body = { stationName, trackList: Array.isArray(trackList) ? trackList : [trackList] };
+  // Ensure we always send an array for trackList and include authPassword
+  const body = { stationName, trackList: Array.isArray(trackList) ? trackList : [trackList], authPassword: 'password' };
   const resp = await fetch('https://wildflower-radio-zj59.onrender.com/admin/editTrackList', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
   });
+  // Return status and attempt to parse JSON body when available
   if (!resp.ok) {
-    return { success: false, status: resp.status };
+    let text = '';
+    try { text = await resp.text(); } catch (e) {}
+    return { success: false, status: resp.status, body: text };
   }
-  // Try to parse server response
   try {
-    const data = await resp.json();
-    return { success: true, data };
+    const contentType = resp.headers.get('content-type') || '';
+    if (contentType.indexOf('application/json') !== -1) {
+      const data = await resp.json();
+      return { success: true, data };
+    }
+    const txt = await resp.text();
+    return { success: true, data: { message: txt } };
   } catch (e) {
-    // If server didn't return JSON, still treat as success
     return { success: true };
   }
 }
@@ -505,18 +516,19 @@ function showSuccess(message) {
   form.insertBefore(successDiv, form.firstChild);
 }
 
-// Small toast helper that fades out
-function showToast(message, duration = 3000) {
+// Small toast helper that fades out. type: 'success'|'error'|'info'
+function showToast(message, duration = 3000, type = 'info') {
   const existing = document.getElementById('admin-toast');
   if (existing) existing.remove();
   const toast = document.createElement('div');
   toast.id = 'admin-toast';
   toast.textContent = message;
+  const bg = type === 'success' ? 'rgba(46,125,50,0.95)' : type === 'error' ? 'rgba(198,40,40,0.95)' : 'rgba(0,0,0,0.85)';
   toast.style.cssText = `
     position: fixed;
     right: 20px;
     bottom: 20px;
-    background: rgba(0,0,0,0.85);
+    background: ${bg};
     color: white;
     padding: 10px 14px;
     border-radius: 6px;
