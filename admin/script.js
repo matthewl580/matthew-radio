@@ -270,8 +270,9 @@ function createStationDiv(stationName, trackObject) {
   // Next-3 preview
   const nextPreview = document.createElement('div');
   nextPreview.className = 'tracklist-next';
-  const nextThree = (currentList || []).slice(0,3);
-  const remaining = Math.max(0, (currentList || []).length - 3);
+  const stateList = (stationState[stationName] && stationState[stationName].currentList) || [];
+  const nextThree = (stateList || []).slice(0,3);
+  const remaining = Math.max(0, (stateList || []).length - 3);
   nextPreview.innerHTML = `<strong>Next:</strong> ${nextThree.map(n => `<span class="next-name">${n}</span>`).join(', ')}${remaining>0 ? ` <em>and ${remaining} more</em>` : ''}`;
   trackListContainer.appendChild(nextPreview);
 
@@ -344,7 +345,8 @@ function createStationDiv(stationName, trackObject) {
       return;
     }
     // prevent duplicates in list
-    if (currentList.includes(chosen)) {
+    const existsList = (stationState[stationName] && stationState[stationName].currentList) || [];
+    if (existsList.includes(chosen)) {
       showError('Track already in the station list.');
       return;
     }
