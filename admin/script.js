@@ -226,8 +226,11 @@ function createStationDiv(stationName, trackObject) {
       const resp = await updateTrackListOnServer(stationName, updated);
       if (resp && resp.success) {
         showSuccess(`Removed track: ${removed[0]}`);
+        showToast('Radio track list updated');
         // update our local copy
         currentList.splice(idx, 1);
+        // Refresh entire station list from server so periodic updates won't overwrite state
+        populateRadioStationList();
       } else {
         showError('Failed to update server track list.');
         // revert UI
@@ -257,7 +260,10 @@ function createStationDiv(stationName, trackObject) {
       const resp = await updateTrackListOnServer(stationName, updated);
       if (resp && resp.success) {
         showSuccess(`Added track: ${chosen}`);
+        showToast('Radio track list updated');
         currentList.push(chosen);
+        // refresh so server-authoritative shapes are rendered
+        populateRadioStationList();
       } else {
         showError('Failed to update server track list.');
         renderList(currentList);
@@ -292,7 +298,8 @@ async function fetchServerTrackNames() {
 
 // Send updated track list for station to server
 async function updateTrackListOnServer(stationName, trackList) {
-  const body = { stationName, trackList };
+  // The endpoint accepts either a string or an array for trackList.
+  const body = { stationName, trackList: Array.isArray(trackList) && trackList.length === 1 ? trackList[0] : trackList };
   const resp = await fetch('https://wildflower-radio-zj59.onrender.com/admin/editTrackList', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -301,10 +308,12 @@ async function updateTrackListOnServer(stationName, trackList) {
   if (!resp.ok) {
     return { success: false, status: resp.status };
   }
+  // Try to parse server response
   try {
     const data = await resp.json();
     return { success: true, data };
   } catch (e) {
+    // If server didn't return JSON, still treat as success
     return { success: true };
   }
 }
@@ -398,6 +407,35 @@ function showSuccess(message) {
   
   const form = document.getElementById('addNewTrackForm');
   form.insertBefore(successDiv, form.firstChild);
+}
+
+// Small toast helper that fades out
+function showToast(message, duration = 3000) {
+  const existing = document.getElementById('admin-toast');
+  if (existing) existing.remove();
+  const toast = document.createElement('div');
+  toast.id = 'admin-toast';
+  toast.textContent = message;
+  toast.style.cssText = `
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    background: rgba(0,0,0,0.85);
+    color: white;
+    padding: 10px 14px;
+    border-radius: 6px;
+    z-index: 9999;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+    opacity: 0;
+    transition: opacity 200ms ease;
+  `;
+  document.body.appendChild(toast);
+  // trigger fade in
+  requestAnimationFrame(() => { toast.style.opacity = '1'; });
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    setTimeout(() => toast.remove(), 250);
+  }, duration);
 }
 
 // Basic input cleaning: normalize, collapse multiple whitespace to single space, trim ends
