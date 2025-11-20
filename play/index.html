@@ -17,6 +17,24 @@
     />
     <link rel="icon" href="https://cdn.glitch.global/f81e375a-f3b2-430f-9115-3f352b74f21b/MIR Logo.png?v=1716468410227" />
     <script src="/play/script.js" defer></script>
+    <style>
+      /* Strong, page-scoped overrides to make the Now Playing bar compact and highly visible */
+      .now-playing-section{padding:6px 8px !important;}
+      .now-playing-card{padding:6px !important;border-radius:6px !important;}
+      .now-playing-compact{display:flex;flex-direction:column;gap:6px;align-items:stretch;}
+      .now-playing-compact .top-row{display:flex;justify-content:space-between;align-items:center;gap:8px}
+      .now-playing-compact .title-wrap{display:flex;gap:6px;align-items:center;min-width:0}
+      .now-playing-compact #trackName{font-size:0.95rem;font-weight:600;color:var(--md-sys-color-on-background);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+      .now-playing-compact #trackAuthor{font-size:0.78rem;color:var(--md-sys-color-on-background-variant);opacity:0.9;margin-left:6px}
+      .now-playing-compact #trackArtwork{width:40px;height:40px;border-radius:6px;object-fit:cover}
+      .now-playing-compact .bottom-row{display:flex;align-items:center;gap:8px}
+      .now-playing-compact .time-left,.now-playing-compact .time-right{width:48px;text-align:center;font-size:0.78rem;color:var(--md-sys-color-on-background-variant)}
+      .now-playing-compact .progress-wrap{flex:1}
+      .now-playing-compact progress#trackProgressMeter{width:100%;height:6px;border-radius:999px;background:var(--bg-tertiary)!important}
+      .now-playing-compact .controls{display:flex;gap:6px;align-items:center;margin-left:8px}
+      /* make sure it sits above page content */
+      .now-playing-section{z-index:120 !important}
+    </style>
   </head>
   <body>
     <nav id="navBar" aria-label="Main navigation">
@@ -57,33 +75,22 @@
       </div>
 
       <div id="nowPlayingUI" class="now-playing-section">
-        <div class="now-playing-card">
-          <div class="now-playing-meta">
-            <div class="track-title-row">
-              <div class="track-title-left">
-                <span id="trackName" class="track-name">Select a station to start listening</span>
-                <span id="trackAuthor" class="track-author">by Nobody</span>
-              </div>
-              <img id="trackArtwork" class="track-artwork" src="https://cdn.glitch.global/f81e375a-f3b2-430f-9115-3f352b74f21b/WR%20Substation%20Icon.png?v=1716472186074" alt="Now playing artwork" />
+        <div class="now-playing-card now-playing-compact">
+          <div class="top-row">
+            <div class="title-wrap">
+              <span id="trackName">Select a station to start listening</span>
+              <span id="trackAuthor">by Nobody</span>
             </div>
-
-            <div class="progress-row">
-              <span id="trackCurrentPosition" class="time-display">0:00</span>
-              <div class="progress-bar-container">
-                <progress id="trackProgressMeter" value="0" max="100"></progress>
-              </div>
-              <span id="trackDuration" class="time-display">0:00</span>
-            </div>
+            <img id="trackArtwork" src="https://cdn.glitch.global/f81e375a-f3b2-430f-9115-3f352b74f21b/WR%20Substation%20Icon.png?v=1716472186074" alt="art" />
           </div>
 
-          <div class="now-playing-actions">
-            <div class="track-controls">
-              <button id="playPauseBtn" class="control-btn" disabled>
-                <span class="material-symbols-rounded">play_arrow</span>
-              </button>
-              <button id="stopBtn" class="control-btn" disabled>
-                <span class="material-symbols-rounded">stop</span>
-              </button>
+          <div class="bottom-row">
+            <div class="time-left"><span id="trackCurrentPosition">0:00</span></div>
+            <div class="progress-wrap"><progress id="trackProgressMeter" value="0" max="100"></progress></div>
+            <div class="time-right"><span id="trackDuration">0:00</span></div>
+            <div class="controls">
+              <button id="playPauseBtn" class="control-btn" disabled><span class="material-symbols-rounded">play_arrow</span></button>
+              <button id="stopBtn" class="control-btn" disabled><span class="material-symbols-rounded">stop</span></button>
             </div>
           </div>
         </div>
