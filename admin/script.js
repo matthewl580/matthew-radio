@@ -53,30 +53,96 @@ document.body.onload = () => {
   setInterval(populateRadioStationList, 3000);
 };
 
+// Keep per-station UI/editing state so periodic refreshes don't clobber in-progress edits
+const stationState = {}; // stationName -> { currentList: string[], selected?: string }
+
 function populateRadioStationList() {
   fetch("https://wildflower-radio-zj59.onrender.com/getAllTrackInformation")
     .then((response) => response.json())
     .then((trackObjects) => {
       const stationListContainer = document.getElementById("radioStationList");
-      stationListContainer.innerHTML = ""; // Clear existing items
 
       for (const stationName in trackObjects) {
-        if (trackObjects.hasOwnProperty(stationName)) {
-          const trackObject = trackObjects[stationName];
+        if (!trackObjects.hasOwnProperty(stationName)) continue;
+        const trackObject = trackObjects[stationName];
+        // If a station card already exists, update only the dynamic pieces so editing state isn't lost
+        const existing = stationListContainer.querySelector(`[data-station="${stationName}"]`);
+        if (existing) {
+          updateStationDiv(existing, trackObject);
+        } else {
           const stationDiv = createStationDiv(stationName, trackObject);
           stationListContainer.appendChild(stationDiv);
         }
       }
+      // Remove any station cards that are no longer present on server
+      const existingCards = Array.from(stationListContainer.querySelectorAll('[data-station]'));
+      existingCards.forEach(card => {
+        const name = card.dataset.station;
+        if (!trackObjects[name]) card.remove();
+      });
     })
     .catch((error) => {
       console.error("Error fetching or parsing track information:", error);
     });
 }
 
+// Update dynamic fields on an existing station card without touching editing controls
+function updateStationDiv(stationDiv, trackObject) {
+  try {
+    stationDiv.dataset.station = stationDiv.dataset.station || '';
+    const progressPercent = Math.round((trackObject.track.position / trackObject.track.duration) * 100);
+    const segmentProgress = Math.round((trackObject.currentSegment.position / trackObject.currentSegment.duration) * 100);
+
+    const titleEl = stationDiv.querySelector('.track-title');
+    const authorEl = stationDiv.querySelector('.track-author');
+    if (titleEl) titleEl.textContent = trackObject.track.title || titleEl.textContent;
+    if (authorEl) authorEl.textContent = trackObject.track.author || authorEl.textContent;
+
+    const fill = stationDiv.querySelector('.progress-fill');
+    if (fill) fill.style.width = `${progressPercent}%`;
+    const ptext = stationDiv.querySelector('.progress-text');
+    if (ptext) ptext.textContent = `${progressPercent}% complete`;
+    const seg = stationDiv.querySelector('.segment-info');
+    if (seg) seg.textContent = `Segment ${trackObject.track.numCurrentSegment} of ${trackObject.track.numSegments} (${segmentProgress}% complete)`;
+
+    // Update next-three display based on preserved stationState (do not overwrite currentList)
+    const name = stationDiv.dataset.station;
+    if (name) {
+      if (!stationState[name]) {
+        // Initialize state with server list if no local edits exist
+        const extracted = (function extractTrackList(obj) {
+          if (!obj) return [];
+          const candidates = [obj.trackList, obj.tracklist, obj.queue, obj.playlist, obj.tracks, obj.trackArray, obj.trackNames];
+          for (const c of candidates) {
+            if (!c) continue;
+            if (Array.isArray(c)) return c.map(i => typeof i === 'string' ? i : (i && i.title) ? i.title : (i && i.track && i.track.title) ? i.track.title : String(i));
+            if (typeof c === 'object') return Object.values(c).map(i => i && i.title ? i.title : (i && i.track && i.track.title ? i.track.title : String(i)));
+            if (typeof c === 'string') return [c];
+          }
+          if (obj.track && obj.track.title) return [obj.track.title];
+          return [];
+        })(trackObject);
+        stationState[name] = { currentList: extracted };
+      }
+
+      const state = stationState[name];
+      const nextEl = stationDiv.querySelector('.tracklist-next');
+      if (nextEl) {
+        const nextThree = (state.currentList || []).slice(0,3);
+        const remaining = Math.max(0, (state.currentList || []).length - 3);
+        nextEl.innerHTML = `<strong>Next:</strong> ${nextThree.map(n => `<span class="next-name">${n}</span>`).join(', ')}${remaining>0 ? ` <em>and ${remaining} more</em>` : ''}`;
+      }
+    }
+  } catch (e) {
+    console.error('Error updating station div', e);
+  }
+}
+
 function createStationDiv(stationName, trackObject) {
   console.log(trackObject);
   const stationDiv = document.createElement("div");
   stationDiv.classList.add("trackInfo");
+  stationDiv.dataset.station = stationName;
 
   const progressPercent = Math.round((trackObject.track.position / trackObject.track.duration) * 100);
   const segmentProgress = Math.round((trackObject.currentSegment.position / trackObject.currentSegment.duration) * 100);
@@ -141,7 +207,11 @@ function createStationDiv(stationName, trackObject) {
     return [];
   };
 
-  const currentList = extractTrackList(trackObject);
+  // Initialize or reuse preserved station list state
+  if (!stationState[stationName]) {
+    stationState[stationName] = { currentList: extractTrackList(trackObject), selected: '' };
+  }
+  const currentList = stationState[stationName].currentList;
 
   // Tracklist title + list
   const listTitle = document.createElement('div');
@@ -186,6 +256,14 @@ function createStationDiv(stationName, trackObject) {
   trackListContainer.appendChild(ul);
   trackListContainer.appendChild(controls);
 
+  // Next-3 preview
+  const nextPreview = document.createElement('div');
+  nextPreview.className = 'tracklist-next';
+  const nextThree = (currentList || []).slice(0,3);
+  const remaining = Math.max(0, (currentList || []).length - 3);
+  nextPreview.innerHTML = `<strong>Next:</strong> ${nextThree.map(n => `<span class="next-name">${n}</span>`).join(', ')}${remaining>0 ? ` <em>and ${remaining} more</em>` : ''}`;
+  trackListContainer.appendChild(nextPreview);
+
   stationDiv.appendChild(trackListContainer);
 
   // Populate the select with tracks from server (cached)
@@ -202,6 +280,9 @@ function createStationDiv(stationName, trackObject) {
       o.textContent = n;
       select.appendChild(o);
     });
+    // restore previous selection if present
+    const prev = stationState[stationName] && stationState[stationName].selected;
+    if (prev) select.value = prev;
   }).catch(err => {
     // leave select empty and show placeholder option
     select.innerHTML = '';
@@ -228,17 +309,19 @@ function createStationDiv(stationName, trackObject) {
         showSuccess(`Removed track: ${removed[0]}`);
         showToast('Radio track list updated');
         // update our local copy
-        currentList.splice(idx, 1);
+        stationState[stationName].currentList = updated.slice();
+        // update currentList local reference
+        // (note: currentList is a const reference to stationState[..].currentList earlier; updating the object above keeps consistency)
         // Refresh entire station list from server so periodic updates won't overwrite state
         populateRadioStationList();
       } else {
         showError('Failed to update server track list.');
         // revert UI
-        renderList(currentList);
+        renderList(stationState[stationName].currentList || []);
       }
     } catch (err) {
       showError('Error updating server track list.');
-      renderList(currentList);
+      renderList(stationState[stationName].currentList || []);
     }
   });
 
@@ -254,23 +337,23 @@ function createStationDiv(stationName, trackObject) {
       showError('Track already in the station list.');
       return;
     }
-    const updated = currentList.concat([chosen]);
+    const updated = (stationState[stationName].currentList || []).concat([chosen]);
     renderList(updated);
     try {
       const resp = await updateTrackListOnServer(stationName, updated);
       if (resp && resp.success) {
         showSuccess(`Added track: ${chosen}`);
         showToast('Radio track list updated');
-        currentList.push(chosen);
+        stationState[stationName].currentList = updated.slice();
         // refresh so server-authoritative shapes are rendered
         populateRadioStationList();
       } else {
         showError('Failed to update server track list.');
-        renderList(currentList);
+        renderList(stationState[stationName].currentList || []);
       }
     } catch (err) {
       showError('Error updating server track list.');
-      renderList(currentList);
+      renderList(stationState[stationName].currentList || []);
     }
   });
 
