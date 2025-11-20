@@ -128,7 +128,7 @@ function updateStationDiv(stationDiv, trackObject) {
       const state = stationState[name];
       // Update remaining count element (next items are badges inside the list)
       const remEl = stationDiv.querySelector('.tracklist-remaining');
-      if (remEl) {
+      if (remEl && !(stationState[name] && stationState[name].isDragging)) {
         const remaining = Math.max(0, (state.currentList || []).length - 3);
         remEl.innerHTML = remaining > 0 ? `<em>and ${remaining} more</em>` : '';
       }
@@ -230,6 +230,7 @@ function createStationDiv(stationName, trackObject) {
       li.className = 'tracklist-item';
       li.dataset.index = idx;
       const badge = idx < 3 ? `<span class="next-badge">Next</span>` : '';
+      li.setAttribute('draggable', 'true');
       li.innerHTML = `
         ${badge}
         <span class="track-name">${t}</span>
@@ -338,6 +339,83 @@ function createStationDiv(stationName, trackObject) {
       showToast('Error updating server track list', 3000, 'error');
       renderList(stationState[stationName].currentList || []);
     }
+  });
+
+  // Drag & drop reordering
+  let dragOverIndex = null;
+  ul.addEventListener('dragstart', (e) => {
+    const li = e.target.closest('li');
+    if (!li) return;
+    const idx = Number(li.dataset.index);
+    if (Number.isNaN(idx)) return;
+    // mark dragging state to avoid overwrites from refresh
+    stationState[stationName].isDragging = true;
+    stationState[stationName].draggingIndex = idx;
+    try { e.dataTransfer.setData('text/plain', String(idx)); } catch (err) {}
+    e.dataTransfer.effectAllowed = 'move';
+    li.classList.add('dragging');
+  });
+
+  ul.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    const over = e.target.closest('li');
+    if (!over) return;
+    const overIdx = Number(over.dataset.index);
+    if (Number.isNaN(overIdx)) return;
+    if (dragOverIndex !== overIdx) {
+      // highlight
+      ul.querySelectorAll('.drag-over').forEach(x => x.classList.remove('drag-over'));
+      over.classList.add('drag-over');
+      dragOverIndex = overIdx;
+    }
+    e.dataTransfer.dropEffect = 'move';
+  });
+
+  ul.addEventListener('drop', async (e) => {
+    e.preventDefault();
+    const src = Number(e.dataTransfer.getData('text/plain'));
+    const overLi = e.target.closest('li');
+    const dest = overLi ? Number(overLi.dataset.index) : null;
+    // clear highlights
+    ul.querySelectorAll('.drag-over').forEach(x => x.classList.remove('drag-over'));
+    ul.querySelectorAll('.dragging').forEach(x => x.classList.remove('dragging'));
+    dragOverIndex = null;
+    // release dragging flag after handling
+    try { stationState[stationName].isDragging = false; } catch (e) {}
+    if (Number.isNaN(src)) return;
+    const current = (stationState[stationName] && stationState[stationName].currentList) || [];
+    const length = current.length;
+    const toIndex = (dest === null || Number.isNaN(dest)) ? length - 1 : dest;
+    if (src === toIndex) return;
+    const updated = current.slice();
+    const [moved] = updated.splice(src, 1);
+    updated.splice(toIndex, 0, moved);
+    // optimistic UI
+    renderList(updated);
+    // persist
+    try {
+      const resp = await updateTrackListOnServer(stationName, updated);
+      if (resp && resp.success) {
+        stationState[stationName].currentList = updated.slice();
+        showSuccess('Track order updated');
+        showToast(resp.data && resp.data.message ? resp.data.message : 'Track order updated', 3000, 'success');
+      } else {
+        showError('Failed to update track order');
+        showToast('Failed to update track order', 3000, 'error');
+        renderList(stationState[stationName].currentList || []);
+      }
+    } catch (err) {
+      showError('Error updating track order');
+      showToast('Error updating track order', 3000, 'error');
+      renderList(stationState[stationName].currentList || []);
+    }
+  });
+
+  ul.addEventListener('dragend', (e) => {
+    ul.querySelectorAll('.drag-over').forEach(x => x.classList.remove('drag-over'));
+    ul.querySelectorAll('.dragging').forEach(x => x.classList.remove('dragging'));
+    stationState[stationName].isDragging = false;
+    stationState[stationName].draggingIndex = undefined;
   });
 
   // Handler: add track from select
