@@ -396,6 +396,22 @@ body {
     width: 100%;
     max-width: 300px;
   }
+  /* Responsive nav adjustments */
+  #navBarOptions {
+    position: absolute;
+    top: 70px;
+    right: 12px;
+    background: var(--bg-secondary);
+    flex-direction: column;
+    padding: 12px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    display: none;
+    min-width: 180px;
+  }
+  .nav-toggle { display: inline-flex; }
+  #navBarOptions.open { display: flex; }
+  .navBarOption { width: 100%; padding: 10px 12px; }
 }
 
 @media screen and (max-width: 600px) {
@@ -442,6 +458,24 @@ body {
   font-size: 16px;
   flex: auto;
   gap: 10px;
+}
+
+/* Mobile nav toggle */
+.nav-toggle {
+  display: none;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-size: 1.6rem;
+  align-self: center;
+  margin-left: 12px;
+  cursor: pointer;
+}
+
+/* Make navBarOption anchors look like option cards */
+.navBarOption {
+  text-decoration: none;
+  color: inherit;
 }
 
 .navBarOption {

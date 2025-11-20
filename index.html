@@ -16,7 +16,7 @@
     />
   </head>
   <body>
-    <div id="navBar">
+    <nav id="navBar" aria-label="Main navigation">
       <div id="logoBar">
         <div id="logomarkContainer">
           <img
@@ -27,17 +27,19 @@
         </div>
         <div id="brandWordMark">Matthew Radio</div>
       </div>
-      <div id="navBarOptions">
-        <div class="navBarOption">
-          <span class="material-symbols-rounded">emoji_people</span>
-          <span class="optionText"><a href="/join" class="nav-link">Join Us</a></span>
-        </div>
-        <div class="navBarOption">
-          <span class="material-symbols-rounded"> volunteer_activism </span
-          ><span class="optionText">Donate</span>
-        </div>
+
+      <button id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navBarOptions" class="nav-toggle">
+        <span class="material-symbols-rounded">menu</span>
+      </button>
+
+      <div id="navBarOptions" role="menubar">
+        <a href="/" class="navBarOption nav-link" role="menuitem"><span class="material-symbols-rounded">home</span><span class="optionText">Home</span></a>
+        <a href="/play" class="navBarOption nav-link" role="menuitem"><span class="material-symbols-rounded">play_arrow</span><span class="optionText">Play</span></a>
+        <a href="/join" class="navBarOption nav-link" role="menuitem"><span class="material-symbols-rounded">emoji_people</span><span class="optionText">Join</span></a>
+        <a href="/admin" class="navBarOption nav-link" role="menuitem"><span class="material-symbols-rounded">admin_panel_settings</span><span class="optionText">Admin</span></a>
+        <a href="/donate" class="navBarOption nav-link" role="menuitem"><span class="material-symbols-rounded">volunteer_activism</span><span class="optionText">Donate</span></a>
       </div>
-    </div>
+    </nav>
     <!-- Hero Section -->
     <section class="hero-section">
       <div class="hero-content">
@@ -159,5 +161,24 @@
    <footer id="copyrightText">
       <p>Copyright Matthew Internet Radio. All rights reserved.</p>
     </footer>
+    <script>
+      // Mobile nav toggle
+      (function(){
+        const toggle = document.getElementById('navToggle');
+        const menu = document.getElementById('navBarOptions');
+        if (!toggle || !menu) return;
+        toggle.addEventListener('click', () => {
+          const open = menu.classList.toggle('open');
+          toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+        // Close menu when clicking outside on small screens
+        document.addEventListener('click', (e) => {
+          if (!menu.classList.contains('open')) return;
+          if (e.target.closest('#navBar')) return;
+          menu.classList.remove('open');
+          toggle.setAttribute('aria-expanded', 'false');
+        });
+      })();
+    </script>
   </body>
 </html>
