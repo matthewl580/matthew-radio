@@ -222,35 +222,56 @@ function createStationDiv(stationName, trackObject) {
   const ul = document.createElement('ul');
   ul.className = 'station-tracklist';
   ul.id = `tracklist-${stationName}`;
-
-  const renderList = (arr) => {
+  // Render list supports collapsed view (current + next 3) and expanded view (full editable list)
+  const renderList = (arr, showAll = !!(stationState[stationName] && stationState[stationName].expanded)) => {
     ul.innerHTML = '';
-    arr.forEach((t, idx) => {
+    const currentTitle = (trackObject && trackObject.track && trackObject.track.title) ? trackObject.track.title : null;
+    const currentIndex = arr.indexOf(currentTitle);
+    const startIdx = currentIndex >= 0 ? currentIndex : 0;
+    const displayArr = showAll ? arr : arr.slice(startIdx, startIdx + 4);
+
+    displayArr.forEach((t, displayIdx) => {
+      // compute original index in full array
+      const origIdx = showAll ? displayIdx : (startIdx + displayIdx);
       const li = document.createElement('li');
       li.className = 'tracklist-item';
-      li.dataset.index = idx;
-      const badge = idx < 3 ? `<span class="next-badge">Next</span>` : '';
-      li.setAttribute('draggable', 'true');
+      li.dataset.index = origIdx;
+      let badge = '';
+      if (!showAll) {
+        if (displayIdx === 0 && startIdx === currentIndex) badge = `<span class="now-badge">Now</span>`;
+        else if (displayIdx > 0) badge = `<span class="next-badge">Next</span>`;
+      }
+      // only allow editing controls when expanded
+      const deleteBtn = showAll ? `<button class="delete-track" data-index="${origIdx}" title="Delete track">🗑️</button>` : '';
+      const draggableAttr = showAll ? 'draggable="true"' : '';
       li.innerHTML = `
         ${badge}
         <span class="track-name">${t}</span>
-        <button class="delete-track" data-index="${idx}" title="Delete track">🗑️</button>
+        ${deleteBtn}
       `;
-      if (idx < 3) li.classList.add('next-item');
+      if (showAll) li.setAttribute('draggable', 'true');
       ul.appendChild(li);
     });
-    // update remaining count element
+
+    // update remaining count element (only meaningful when collapsed)
     const parent = ul.parentElement;
     if (parent) {
       const remEl = parent.querySelector('.tracklist-remaining');
       if (remEl) {
-        const remaining = Math.max(0, (arr || []).length - 3);
-        remEl.innerHTML = remaining > 0 ? `<em>and ${remaining} more</em>` : '';
+        if (showAll) {
+          remEl.innerHTML = `<button class="view-all-toggle">Collapse</button>`;
+        } else {
+          const remaining = Math.max(0, (arr || []).length - (startIdx + displayArr.length));
+          // show view all button when there are more than displayed
+          const hasMore = (arr || []).length > displayArr.length || remaining > 0;
+          remEl.innerHTML = (hasMore ? `<em>and ${Math.max(0, (arr || []).length - displayArr.length)} more</em> <button class="view-all-toggle">View All</button>` : '');
+        }
       }
     }
   };
 
-  renderList(stationState[stationName].currentList || []);
+  // initial render (collapsed)
+  renderList(stationState[stationName].currentList || [], false);
 
   // Add controls: select available server tracks and add button
   const controls = document.createElement('div');
@@ -279,6 +300,23 @@ function createStationDiv(stationName, trackObject) {
   trackListContainer.appendChild(remainingEl);
 
   stationDiv.appendChild(trackListContainer);
+
+  // Initially hide editing controls when collapsed (we start collapsed)
+  if (!stationState[stationName].expanded) {
+    controls.style.display = 'none';
+  }
+
+  // Toggle view all / collapse
+  remainingEl.addEventListener('click', (e) => {
+    const btn = e.target.closest('.view-all-toggle');
+    if (!btn) return;
+    const isExpanded = !!stationState[stationName].expanded;
+    stationState[stationName].expanded = !isExpanded;
+    // show or hide controls based on expansion
+    controls.style.display = stationState[stationName].expanded ? 'flex' : 'none';
+    // re-render list in appropriate mode
+    renderList(stationState[stationName].currentList || [], !!stationState[stationName].expanded);
+  });
 
   // Populate the select with tracks from server (cached)
   fetchServerTrackNames().then((names) => {
