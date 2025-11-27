@@ -28,67 +28,108 @@
 }
 
 .join-benefits {
-  padding: 100px 20px;
-  background-color: var(--bg-secondary);
+  padding: 120px 40px;
+  background: var(--gradient-secondary);
+  animation: fadeIn 0.8s ease-out 0.6s both;
 }
 
 .join-benefits .section-title {
   text-align: center;
-  font-size: 2.5rem;
-  font-weight: 600;
-  color: var(--accent-primary);
-  margin: 0 0 60px 0;
+  font-size: 3rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,0.9) 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0 0 80px 0;
+  animation: slideInUp 0.8s ease-out 0.8s both;
 }
 
 .join-benefits .benefits-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .join-benefits .benefit-card {
-  background: var(--bg-primary);
-  padding: 40px 30px;
-  border-radius: 20px;
+  background: var(--bg-glass);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  padding: 48px 32px;
+  border-radius: 24px;
   text-align: center;
-  box-shadow: 0 8px 30px var(--shadow-light);
-  transition: all 0.3s ease;
   border: 1px solid var(--border-color);
+  box-shadow: 0 12px 40px var(--shadow-light);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  animation: scaleIn 0.6s ease-out both;
+  animation-delay: calc(var(--stagger, 0) * 0.1s);
+}
+
+.join-benefits .benefit-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient-primary);
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .join-benefits .benefit-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 15px 40px var(--shadow-medium);
+  transform: translateY(-12px) scale(1.02);
+  box-shadow: 0 24px 60px var(--shadow-medium);
+  border-color: var(--border-hover);
+}
+
+.join-benefits .benefit-card:hover::before {
+  opacity: 1;
 }
 
 .join-benefits .benefit-icon {
-  width: 80px;
-  height: 80px;
-  background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary));
+  width: 88px;
+  height: 88px;
+  background: var(--gradient-primary);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 20px;
-  box-shadow: 0 8px 20px var(--shadow-medium);
+  margin: 0 auto 24px;
+  box-shadow: 0 12px 32px var(--shadow-medium);
+  transition: transform 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.join-benefits .benefit-icon:hover {
+  transform: scale(1.1);
 }
 
 .join-benefits .benefit-icon .material-symbols-rounded {
-  font-size: 2.5rem;
+  font-size: 2.8rem;
   color: white;
 }
 
 .join-benefits .benefit-card h3 {
-  font-size: 1.5rem;
-  font-weight: 600;
+  font-size: 1.6rem;
+  font-weight: 700;
   color: var(--text-primary);
-  margin: 0 0 15px 0;
+  margin: 0 0 16px 0;
+  position: relative;
+  z-index: 1;
 }
 
 .join-benefits .benefit-card p {
   color: var(--text-secondary);
-  line-height: 1.6;
+  line-height: 1.7;
   margin: 0;
+  position: relative;
+  z-index: 1;
 }
 
 /* Join Form Section */

@@ -1,22 +1,26 @@
 /* Admin Page Styles - Modern & Polished */
 .admin-container {
-  padding: 30px;
+  padding: 40px;
   max-width: 1400px;
   margin: 0 auto;
-  background: var(--bg-secondary);
+  background: var(--gradient-secondary);
   min-height: calc(100vh - 70px);
+  animation: fadeIn 0.8s ease-out;
 }
 
 .admin-header {
   text-align: center;
-  margin-bottom: 50px;
-  padding: 50px 40px;
-  background: var(--bg-primary);
-  border-radius: 24px;
-  box-shadow: 0 12px 40px var(--shadow-light);
+  margin-bottom: 60px;
+  padding: 60px 50px;
+  background: var(--bg-glass);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border-radius: 28px;
   border: 1px solid var(--border-color);
+  box-shadow: 0 20px 60px var(--shadow-medium);
   position: relative;
   overflow: hidden;
+  animation: slideInUp 0.8s ease-out 0.2s both;
 }
 
 .admin-header::before {
@@ -25,25 +29,32 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 6px;
-  background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+  pointer-events: none;
 }
 
 .admin-title {
-  font-size: 3.5rem;
-  font-weight: 700;
-  background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary));
+  font-size: 3.8rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,0.9) 100%);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin: 0 0 20px 0;
-  text-shadow: 0 4px 8px var(--shadow-medium);
+  margin: 0 0 24px 0;
+  text-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  letter-spacing: -0.02em;
+  position: relative;
+  z-index: 1;
 }
 
 .admin-subtitle {
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   color: var(--text-secondary);
   margin: 0;
   opacity: 0.9;
+  position: relative;
+  z-index: 1;
 }
 
 .admin-section {
@@ -87,29 +98,34 @@
 
 /* Modern Form Styles */
 .form-container {
-  background: var(--bg-primary);
-  border-radius: 20px;
-  padding: 40px;
-  box-shadow: 0 8px 30px var(--shadow-light);
+  background: var(--bg-glass);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  border-radius: 24px;
+  padding: 48px;
   border: 1px solid var(--border-color);
+  box-shadow: 0 12px 40px var(--shadow-light);
   position: relative;
+  animation: scaleIn 0.6s ease-out 0.4s both;
 }
 
 .form-title {
-  font-size: 1.8rem;
-  font-weight: 600;
+  font-size: 1.9rem;
+  font-weight: 700;
   color: var(--text-primary);
-  margin: 0 0 30px 0;
+  margin: 0 0 32px 0;
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 16px;
+  position: relative;
+  z-index: 1;
 }
 
 .form-title::before {
   content: '';
   width: 4px;
-  height: 25px;
-  background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary));
+  height: 28px;
+  background: var(--gradient-primary);
   border-radius: 2px;
 }
 

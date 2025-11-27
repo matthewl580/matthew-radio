@@ -1,20 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-K9B7R9FY9P"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K9B7R9FY9P"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-K9B7R9FY9P');
+    </script>
 
-  gtag('config', 'G-K9B7R9FY9P');
-</script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Matthew Internet Radio</title>
+    <meta name="description" content="Experience the best in internet radio with Matthew Radio. 24/7 commercial-free music streaming with curated playlists from emerging artists and timeless classics." />
+    <meta name="keywords" content="internet radio, music streaming, ad-free music, curated playlists, online radio" />
+    <meta name="author" content="Matthew Radio" />
+
+    <!-- Accessibility and Performance -->
+    <meta name="theme-color" content="#0a0a0a" />
+    <meta name="color-scheme" content="dark light" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://matthew-radio.com/" />
+    <meta property="og:title" content="Matthew Internet Radio - Experience Music Like Never Before" />
+    <meta property="og:description" content="Join our growing community of music lovers discovering the best in internet radio - 24/7, commercial-free, and curated just for you." />
+    <meta property="og:image" content="https://cdn.glitch.global/f81e375a-f3b2-430f-9115-3f352b74f21b/MIR Logo.png?v=1716468410227" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://matthew-radio.com/" />
+    <meta property="twitter:title" content="Matthew Internet Radio - Experience Music Like Never Before" />
+    <meta property="twitter:description" content="Join our growing community of music lovers discovering the best in internet radio - 24/7, commercial-free, and curated just for you." />
+    <meta property="twitter:image" content="https://cdn.glitch.global/f81e375a-f3b2-430f-9115-3f352b74f21b/MIR Logo.png?v=1716468410227" />
+
+    <title>Matthew Internet Radio - Experience Music Like Never Before</title>
+
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="/global/styles.css" />
+    <link rel="stylesheet" href="/global/animations.css" />
     <link rel="stylesheet" href="/style.css" />
+
+    <!-- Fonts -->
     <link
       href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
       rel="stylesheet"
@@ -23,171 +50,319 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
     />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://cdn.glitch.global/f81e375a-f3b2-430f-9115-3f352b74f21b/MIR Logo.png?v=1716468410227" />
   </head>
+
   <body>
-    <nav id="navBar" aria-label="Main navigation">
-      <div id="logoBar">
-        <div id="logomarkContainer">
-          <img
-            id="logomark"
-            src="https://cdn.glitch.global/f81e375a-f3b2-430f-9115-3f352b74f21b/MIR Logo.png?v=1716468410227"
-            alt="Matthew Radio Logo"
-          />
+    <!-- Skip to main content link for accessibility -->
+    <a href="#main-content" class="skip-link sr-only">Skip to main content</a>
+
+    <!-- Header with Navigation -->
+    <header role="banner">
+      <nav id="navBar" aria-label="Main navigation">
+        <div id="logoBar">
+          <div id="logomarkContainer">
+            <img
+              id="logomark"
+              src="https://cdn.glitch.global/f81e375a-f3b2-430f-9115-3f352b74f21b/MIR Logo.png?v=1716468410227"
+              alt="Matthew Radio Logo"
+              loading="eager"
+            />
+          </div>
+          <div id="brandWordMark">Matthew Radio</div>
         </div>
-        <div id="brandWordMark">Matthew Radio</div>
-      </div>
 
-      <button id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navBarOptions" class="nav-toggle">
-        <span class="material-symbols-rounded">menu</span>
-      </button>
+        <button id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navBarOptions" class="nav-toggle btn-ripple">
+          <span class="material-symbols-rounded" aria-hidden="true">menu</span>
+        </button>
 
-      <div id="navBarOptions" role="menubar">
-        <a href="/" class="navBarOption nav-link" role="menuitem"><span class="material-symbols-rounded">home</span><span class="optionText">Home</span></a>
-        <a href="/play" class="navBarOption nav-link" role="menuitem"><span class="material-symbols-rounded">play_arrow</span><span class="optionText">Play</span></a>
-        <a href="/join" class="navBarOption nav-link" role="menuitem"><span class="material-symbols-rounded">emoji_people</span><span class="optionText">Join</span></a>
-        <a href="/admin" class="navBarOption nav-link" role="menuitem"><span class="material-symbols-rounded">admin_panel_settings</span><span class="optionText">Admin</span></a>
-        <a href="/donate" class="navBarOption nav-link" role="menuitem"><span class="material-symbols-rounded">volunteer_activism</span><span class="optionText">Donate</span></a>
-      </div>
-    </nav>
-    <!-- Hero Section -->
-    <section class="hero-section">
-      <div class="hero-content">
-        <h1 class="hero-title">Experience Music Like Never Before</h1>
-        <p class="hero-subtitle">Join thousands of listeners discovering the best in internet radio - 24/7, commercial-free, and curated just for you.</p>
-        <div class="hero-actions">
-          <a href="/play" class="cta-button primary" role="button" aria-label="Start listening to Matthew Radio">
-            <span class="material-symbols-rounded">play_arrow</span>
-            Start Listening Now
+        <div id="navBarOptions" role="menubar">
+          <a href="/" class="navBarOption nav-link" role="menuitem" aria-current="page">
+            <span class="material-symbols-rounded" aria-hidden="true">home</span>
+            <span class="optionText">Home</span>
           </a>
-          <a href="#benefits" class="cta-button secondary" role="button" aria-label="Learn more about Matthew Radio benefits">
-            <span class="material-symbols-rounded">info</span>
-            Learn More
+          <a href="/play" class="navBarOption nav-link" role="menuitem">
+            <span class="material-symbols-rounded" aria-hidden="true">play_arrow</span>
+            <span class="optionText">Play</span>
+          </a>
+          <a href="/join" class="navBarOption nav-link" role="menuitem">
+            <span class="material-symbols-rounded" aria-hidden="true">emoji_people</span>
+            <span class="optionText">Join</span>
+          </a>
+          <a href="/admin" class="navBarOption nav-link" role="menuitem">
+            <span class="material-symbols-rounded" aria-hidden="true">admin_panel_settings</span>
+            <span class="optionText">Admin</span>
+          </a>
+          <a href="/donate" class="navBarOption nav-link" role="menuitem">
+            <span class="material-symbols-rounded" aria-hidden="true">volunteer_activism</span>
+            <span class="optionText">Donate</span>
           </a>
         </div>
-      </div>
-      <div class="hero-visual">
-        <div class="radio-waves">
-          <div class="wave wave-1"></div>
-          <div class="wave wave-2"></div>
-          <div class="wave wave-3"></div>
-        </div>
-      </div>
-    </section>
+      </nav>
+    </header>
 
-    <!-- Benefits Section -->
-    <section id="benefits" class="benefits-section">
+    <!-- Main Content -->
+    <main id="main-content" role="main">
+      <!-- Hero Section -->
+      <section class="hero-section" aria-labelledby="hero-title">
+        <div class="container">
+          <div class="hero-content">
+            <h1 id="hero-title" class="hero-title animate-fade-in">
+              Experience Music Like <span class="animate-wave">Never</span> Before
+            </h1>
+            <p class="hero-subtitle animate-slide-up animate-stagger-2">
+              Join our growing community of music lovers discovering the best in internet radio - 24/7, commercial-free, and curated just for you.
+            </p>
+            <div class="hero-actions animate-slide-up animate-stagger-3">
+              <a href="/play" class="btn btn-primary btn-ripple" role="button" aria-label="Start listening to Matthew Radio">
+                <span class="material-symbols-rounded" aria-hidden="true">play_arrow</span>
+                Start Listening Now
+              </a>
+              <a href="#features" class="btn btn-secondary btn-ripple" role="button" aria-label="Learn more about Matthew Radio features">
+                <span class="material-symbols-rounded" aria-hidden="true">info</span>
+                Learn More
+              </a>
+            </div>
+          </div>
+          <div class="hero-visual animate-scale-in animate-stagger-4">
+            <div class="radio-waves" role="img" aria-label="Animated radio waves visualization">
+              <div class="wave wave-1"></div>
+              <div class="wave wave-2"></div>
+              <div class="wave wave-3"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Features Section -->
+      <section id="features" class="benefits-section" aria-labelledby="features-title">
+        <div class="container">
+          <h2 id="features-title" class="section-title animate-fade-in">Why Choose Matthew Radio?</h2>
+          <div class="benefits-grid">
+            <article class="benefit-card card-hover animate-slide-up animate-stagger-1" tabindex="0">
+              <div class="benefit-icon">
+                <span class="material-symbols-rounded" aria-hidden="true">music_note</span>
+              </div>
+              <h3>Curated Playlists</h3>
+              <p>Hand-picked music from emerging artists and timeless classics, updated regularly by our expert DJs.</p>
+            </article>
+
+            <article class="benefit-card card-hover animate-slide-up animate-stagger-2" tabindex="0">
+              <div class="benefit-icon">
+                <span class="material-symbols-rounded" aria-hidden="true">schedule</span>
+              </div>
+              <h3>24/7 Streaming</h3>
+              <p>Never miss a beat with our continuous broadcast. Your favorite music is always just one click away.</p>
+            </article>
+
+            <article class="benefit-card card-hover animate-slide-up animate-stagger-3" tabindex="0">
+              <div class="benefit-icon">
+                <span class="material-symbols-rounded" aria-hidden="true">volume_up</span>
+              </div>
+              <h3>High Quality Audio</h3>
+              <p>Experience crystal-clear sound with our premium streaming quality, optimized for every device.</p>
+            </article>
+
+            <article class="benefit-card card-hover animate-slide-up animate-stagger-4" tabindex="0">
+              <div class="benefit-icon">
+                <span class="material-symbols-rounded" aria-hidden="true">smartphone</span>
+              </div>
+              <h3>Multi-Platform</h3>
+              <p>Listen anywhere, anytime. Compatible with all devices - desktop, mobile, tablet, and smart speakers.</p>
+            </article>
+
+            <article class="benefit-card card-hover animate-slide-up animate-stagger-5" tabindex="0">
+              <div class="benefit-icon">
+                <span class="material-symbols-rounded" aria-hidden="true">group</span>
+              </div>
+              <h3>Community Driven</h3>
+              <p>Join a vibrant community of music lovers. Request songs, interact with DJs, and discover new favorites.</p>
+            </article>
+
+            <article class="benefit-card card-hover animate-slide-up animate-stagger-6" tabindex="0">
+              <div class="benefit-icon">
+                <span class="material-symbols-rounded" aria-hidden="true">favorite</span>
+              </div>
+              <h3>Ad-Free Experience</h3>
+              <p>Enjoy uninterrupted music without commercial breaks. Pure listening pleasure from start to finish.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Statistics Section -->
+      <section class="stats-section" aria-labelledby="stats-title">
+        <div class="container">
+          <h2 id="stats-title" class="section-title animate-fade-in">Our Growing Community</h2>
+          <div class="stats-grid">
+            <div class="stat-item animate-counter animate-stagger-1">
+              <div class="stat-number" aria-label="100 daily listeners">100</div>
+              <div class="stat-label">Daily Listeners</div>
+            </div>
+            <div class="stat-item animate-counter animate-stagger-2">
+              <div class="stat-number" aria-label="30 radio stations">30</div>
+              <div class="stat-label">Stations</div>
+            </div>
+            <div class="stat-item animate-counter animate-stagger-3">
+              <div class="stat-number" aria-label="24 hours a day, 7 days a week broadcasting">24/7</div>
+              <div class="stat-label">Live Broadcasting</div>
+            </div>
+            <div class="stat-item animate-counter animate-stagger-4">
+              <div class="stat-number" aria-label="100 percent ad-free">100%</div>
+              <div class="stat-label">Ad-Free</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Call to Action Section -->
+      <section class="cta-section" aria-labelledby="cta-title">
+        <div class="container text-center">
+          <h2 id="cta-title" class="animate-fade-in">Ready to Start Your Musical Journey?</h2>
+          <p class="animate-slide-up animate-stagger-2">
+            Join our community today and discover why thousands choose Matthew Radio for their daily soundtrack.
+          </p>
+          <div class="cta-actions animate-slide-up animate-stagger-3">
+            <a href="/play" class="btn btn-primary btn-ripple" role="button" aria-label="Start listening to Matthew Radio for free">
+              <span class="material-symbols-rounded" aria-hidden="true">play_arrow</span>
+              Start Listening Free
+            </a>
+            <a href="/join" class="btn btn-secondary btn-ripple" role="button" aria-label="Join the Matthew Radio community">
+              <span class="material-symbols-rounded" aria-hidden="true">group_add</span>
+              Join Our Community
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer id="copyrightText" role="contentinfo">
       <div class="container">
-        <h2 class="section-title">Why Choose Matthew Radio?</h2>
-        <div class="benefits-grid">
-          <div class="benefit-card">
-            <div class="benefit-icon">
-              <span class="material-symbols-rounded">music_note</span>
-            </div>
-            <h3>Curated Playlists</h3>
-            <p>Hand-picked music from emerging artists and timeless classics, updated regularly by our expert DJs.</p>
-          </div>
-          <div class="benefit-card">
-            <div class="benefit-icon">
-              <span class="material-symbols-rounded">schedule</span>
-            </div>
-            <h3>24/7 Streaming</h3>
-            <p>Never miss a beat with our continuous broadcast. Your favorite music is always just one click away.</p>
-          </div>
-          <div class="benefit-card">
-            <div class="benefit-icon">
-              <span class="material-symbols-rounded">volume_up</span>
-            </div>
-            <h3>High Quality Audio</h3>
-            <p>Experience crystal-clear sound with our premium streaming quality, optimized for every device.</p>
-          </div>
-          <div class="benefit-card">
-            <div class="benefit-icon">
-              <span class="material-symbols-rounded">smartphone</span>
-            </div>
-            <h3>Multi-Platform</h3>
-            <p>Listen anywhere, anytime. Compatible with all devices - desktop, mobile, tablet, and smart speakers.</p>
-          </div>
-          <div class="benefit-card">
-            <div class="benefit-icon">
-              <span class="material-symbols-rounded">group</span>
-            </div>
-            <h3>Community Driven</h3>
-            <p>Join a vibrant community of music lovers. Request songs, interact with DJs, and discover new favorites.</p>
-          </div>
-          <div class="benefit-card">
-            <div class="benefit-icon">
-              <span class="material-symbols-rounded">favorite</span>
-            </div>
-            <h3>Ad-Free Experience</h3>
-            <p>Enjoy uninterrupted music without commercial breaks. Pure listening pleasure from start to finish.</p>
-          </div>
-        </div>
+        <p>&copy; <span id="currentYear"></span> Matthew Internet Radio. All rights reserved.</p>
       </div>
-    </section>
-
-    <!-- Stats Section -->
-    <section class="stats-section">
-      <div class="container">
-        <div class="stats-grid">
-          <div class="stat-item">
-            <div class="stat-number">10,000+</div>
-            <div class="stat-label">Active Listeners</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-number">50,000+</div>
-            <div class="stat-label">Songs in Library</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-number">24/7</div>
-            <div class="stat-label">Live Broadcasting</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-number">100%</div>
-            <div class="stat-label">Ad-Free</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Call to Action Section -->
-    <section class="cta-section">
-      <div class="container">
-        <h2>Ready to Start Your Musical Journey?</h2>
-        <p>Join our community today and discover why thousands choose Matthew Radio for their daily soundtrack.</p>
-        <div class="cta-actions">
-          <a href="/play" class="cta-button primary large" role="button" aria-label="Start listening to Matthew Radio for free">
-            <span class="material-symbols-rounded">play_arrow</span>
-            Start Listening Free
-          </a>
-          <a href="#navBar" class="cta-button secondary large" role="button" aria-label="Join the Matthew Radio community">
-            <span class="material-symbols-rounded">group_add</span>
-            Join Our Community
-          </a>
-      </div>
-    </div>
-    </section>
-
-   <footer id="copyrightText">
-      <p>Copyright Matthew Internet Radio. All rights reserved.</p>
     </footer>
+
+    <!-- Scripts -->
+    <script src="/global/accessibility.js"></script>
+    <script src="/global/theme-manager.js"></script>
+    <script src="/components/hero-carousel.js"></script>
+    <script src="/components/stats-counter.js"></script>
+
     <script>
-      // Mobile nav toggle
+      // Initialize current year in footer
+      document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+      // Enhanced mobile navigation with accessibility
       (function(){
         const toggle = document.getElementById('navToggle');
         const menu = document.getElementById('navBarOptions');
+
         if (!toggle || !menu) return;
-        toggle.addEventListener('click', () => {
-          const open = menu.classList.toggle('open');
-          toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-        });
+
+        function toggleMenu() {
+          const isOpen = menu.classList.toggle('open');
+          toggle.setAttribute('aria-expanded', isOpen);
+
+          // Announce to screen readers
+          if (window.accessibilityManager) {
+            window.accessibilityManager.announce(
+              isOpen ? 'Navigation menu opened' : 'Navigation menu closed',
+              'assertive'
+            );
+          }
+
+          // Focus management
+          if (isOpen) {
+            const firstLink = menu.querySelector('a');
+            if (firstLink) firstLink.focus();
+          }
+        }
+
+        toggle.addEventListener('click', toggleMenu);
+
         // Close menu when clicking outside on small screens
         document.addEventListener('click', (e) => {
           if (!menu.classList.contains('open')) return;
           if (e.target.closest('#navBar')) return;
-          menu.classList.remove('open');
-          toggle.setAttribute('aria-expanded', 'false');
+          toggleMenu();
+        });
+
+        // Close menu on escape key
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && menu.classList.contains('open')) {
+            toggleMenu();
+            toggle.focus();
+          }
+        });
+
+        // Keyboard navigation for menu items
+        menu.addEventListener('keydown', (e) => {
+          const items = Array.from(menu.querySelectorAll('a[role="menuitem"]'));
+          const currentIndex = items.indexOf(document.activeElement);
+
+          switch(e.key) {
+            case 'ArrowDown':
+              e.preventDefault();
+              const nextIndex = (currentIndex + 1) % items.length;
+              items[nextIndex].focus();
+              break;
+            case 'ArrowUp':
+              e.preventDefault();
+              const prevIndex = currentIndex <= 0 ? items.length - 1 : currentIndex - 1;
+              items[prevIndex].focus();
+              break;
+            case 'Home':
+              e.preventDefault();
+              items[0].focus();
+              break;
+            case 'End':
+              e.preventDefault();
+              items[items.length - 1].focus();
+              break;
+          }
         });
       })();
+
+      // Smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+
+            // Update URL without triggering scroll
+            history.pushState(null, null, this.getAttribute('href'));
+          }
+        });
+      });
+
+      // Performance optimization: Lazy load images
+      const images = document.querySelectorAll('img[loading="lazy"]');
+      const imageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const img = entry.target;
+            img.src = img.dataset.src;
+            img.classList.remove('lazy');
+            observer.unobserve(img);
+          }
+        });
+      });
+
+      images.forEach(img => imageObserver.observe(img));
+
+      // Initialize components when DOM is ready
+      document.addEventListener('DOMContentLoaded', function() {
+        // Components are auto-initialized in their respective files
+        console.log('Matthew Radio homepage loaded successfully');
+      });
     </script>
   </body>
 </html>
