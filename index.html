@@ -40,6 +40,7 @@
     <link rel="stylesheet" href="/global/styles.css" />
     <link rel="stylesheet" href="/global/animations.css" />
     <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="/landing-style.css" />
 
     <!-- Fonts -->
     <link
@@ -91,10 +92,7 @@
             <span class="material-symbols-rounded" aria-hidden="true">emoji_people</span>
             <span class="optionText">Join</span>
           </a>
-          <a href="/admin" class="navBarOption nav-link" role="menuitem">
-            <span class="material-symbols-rounded" aria-hidden="true">admin_panel_settings</span>
-            <span class="optionText">Admin</span>
-          </a>
+         
           <a href="/donate" class="navBarOption nav-link" role="menuitem">
             <span class="material-symbols-rounded" aria-hidden="true">volunteer_activism</span>
             <span class="optionText">Donate</span>
@@ -105,137 +103,51 @@
 
     <!-- Main Content -->
     <main id="main-content" role="main">
-      <!-- Hero Section -->
-      <section class="hero-section" aria-labelledby="hero-title">
-        <div class="container">
-          <div class="hero-content">
-            <h1 id="hero-title" class="hero-title animate-fade-in">
-              Experience Music Like <span class="animate-wave">Never</span> Before
-            </h1>
-            <p class="hero-subtitle animate-slide-up animate-stagger-2">
-              Join our growing community of music lovers discovering the best in internet radio - 24/7, commercial-free, and curated just for you.
-            </p>
-            <div class="hero-actions animate-slide-up animate-stagger-3">
-              <a href="/play" class="btn btn-primary btn-ripple" role="button" aria-label="Start listening to Matthew Radio">
-                <span class="material-symbols-rounded" aria-hidden="true">play_arrow</span>
-                Start Listening Now
-              </a>
-              <a href="#features" class="btn btn-secondary btn-ripple" role="button" aria-label="Learn more about Matthew Radio features">
-                <span class="material-symbols-rounded" aria-hidden="true">info</span>
-                Learn More
-              </a>
-            </div>
-          </div>
-          <div class="hero-visual animate-scale-in animate-stagger-4">
-            <div class="radio-waves" role="img" aria-label="Animated radio waves visualization">
-              <div class="wave wave-1"></div>
-              <div class="wave wave-2"></div>
-              <div class="wave wave-3"></div>
-            </div>
-          </div>
+        <div class="panel-grid">
+      <!-- Integrated Landing Main -->
+      <section class="hero">
+        <div class="container hero-grid">
+            <h1 class="display">Sound for the new age.</h1>
+            <p class="lead">Curated mixes, live sessions, and ambient soundscapes — all in a focused, elegant interface.</p>
+            <div class="ctas">
+              <a class="btn btn-primary" href="/play">Start Discovering</a>
+              <a class="btn btn-ghost" href="#about">Learn More</a>
+          
         </div>
       </section>
 
-      <!-- Features Section -->
-      <section id="features" class="benefits-section" aria-labelledby="features-title">
-        <div class="container">
-          <h2 id="features-title" class="section-title animate-fade-in">Why Choose Matthew Radio?</h2>
-          <div class="benefits-grid">
-            <article class="benefit-card card-hover animate-slide-up animate-stagger-1" tabindex="0">
-              <div class="benefit-icon">
-                <span class="material-symbols-rounded" aria-hidden="true">music_note</span>
-              </div>
-              <h3>Curated Playlists</h3>
-              <p>Hand-picked music from emerging artists and timeless classics, updated regularly by our expert DJs.</p>
-            </article>
-
-            <article class="benefit-card card-hover animate-slide-up animate-stagger-2" tabindex="0">
-              <div class="benefit-icon">
-                <span class="material-symbols-rounded" aria-hidden="true">schedule</span>
-              </div>
-              <h3>24/7 Streaming</h3>
-              <p>Never miss a beat with our continuous broadcast. Your favorite music is always just one click away.</p>
-            </article>
-
-            <article class="benefit-card card-hover animate-slide-up animate-stagger-3" tabindex="0">
-              <div class="benefit-icon">
-                <span class="material-symbols-rounded" aria-hidden="true">volume_up</span>
-              </div>
-              <h3>High Quality Audio</h3>
-              <p>Experience crystal-clear sound with our premium streaming quality, optimized for every device.</p>
-            </article>
-
-            <article class="benefit-card card-hover animate-slide-up animate-stagger-4" tabindex="0">
-              <div class="benefit-icon">
-                <span class="material-symbols-rounded" aria-hidden="true">smartphone</span>
-              </div>
-              <h3>Multi-Platform</h3>
-              <p>Listen anywhere, anytime. Compatible with all devices - desktop, mobile, tablet, and smart speakers.</p>
-            </article>
-
-            <article class="benefit-card card-hover animate-slide-up animate-stagger-5" tabindex="0">
-              <div class="benefit-icon">
-                <span class="material-symbols-rounded" aria-hidden="true">group</span>
-              </div>
-              <h3>Community Driven</h3>
-              <p>Join a vibrant community of music lovers. Request songs, interact with DJs, and discover new favorites.</p>
-            </article>
-
-            <article class="benefit-card card-hover animate-slide-up animate-stagger-6" tabindex="0">
-              <div class="benefit-icon">
-                <span class="material-symbols-rounded" aria-hidden="true">favorite</span>
-              </div>
-              <h3>Ad-Free Experience</h3>
-              <p>Enjoy uninterrupted music without commercial breaks. Pure listening pleasure from start to finish.</p>
-            </article>
-          </div>
+      <section id="features" class="features container">
+        <h2 class="section-title reveal">Features</h2>
+        <div class="grid">
+          <article class="card feature reveal">
+            <h3>Curated Sessions</h3>
+            <p>Handpicked sets for deep focus and pure listening.</p>
+          </article>
+          <article class="card feature reveal">
+            <h3>Seamless Playlists</h3>
+            <p>Adaptive playlists tuned to your mood and time of day.</p>
+          </article>
+          <article class="card feature reveal">
+            <h3>Ambient Layers</h3>
+            <p>Blend textures and field recordings for a unique soundstage.</p>
+          </article>
         </div>
       </section>
 
-      <!-- Statistics Section -->
-      <section class="stats-section" aria-labelledby="stats-title">
-        <div class="container">
-          <h2 id="stats-title" class="section-title animate-fade-in">Our Growing Community</h2>
-          <div class="stats-grid">
-            <div class="stat-item animate-counter animate-stagger-1">
-              <div class="stat-number" aria-label="100 daily listeners">100</div>
-              <div class="stat-label">Daily Listeners</div>
-            </div>
-            <div class="stat-item animate-counter animate-stagger-2">
-              <div class="stat-number" aria-label="30 radio stations">30</div>
-              <div class="stat-label">Stations</div>
-            </div>
-            <div class="stat-item animate-counter animate-stagger-3">
-              <div class="stat-number" aria-label="24 hours a day, 7 days a week broadcasting">24/7</div>
-              <div class="stat-label">Live Broadcasting</div>
-            </div>
-            <div class="stat-item animate-counter animate-stagger-4">
-              <div class="stat-number" aria-label="100 percent ad-free">100%</div>
-              <div class="stat-label">Ad-Free</div>
-            </div>
+      <section id="about" class="about container">
+        <div class="about-card card reveal">
+          <div>
+            <h2>Design that listens</h2>
+            <p>Minimal UI, maximum presence — unobtrusive and elegant.</p>
+          </div>
+          <div>
+            <a class="btn btn-primary" href="/play">Try the Player</a>
           </div>
         </div>
       </section>
-
-      <!-- Call to Action Section -->
-      <section class="cta-section" aria-labelledby="cta-title">
-        <div class="container text-center">
-          <h2 id="cta-title" class="animate-fade-in">Ready to Start Your Musical Journey?</h2>
-          <p class="animate-slide-up animate-stagger-2">
-            Join our community today and discover why thousands choose Matthew Radio for their daily soundtrack.
-          </p>
-          <div class="cta-actions animate-slide-up animate-stagger-3">
-            <a href="/play" class="btn btn-primary btn-ripple" role="button" aria-label="Start listening to Matthew Radio for free">
-              <span class="material-symbols-rounded" aria-hidden="true">play_arrow</span>
-              Start Listening Free
-            </a>
-            <a href="/join" class="btn btn-secondary btn-ripple" role="button" aria-label="Join the Matthew Radio community">
-              <span class="material-symbols-rounded" aria-hidden="true">group_add</span>
-              Join Our Community
-            </a>
-          </div>
         </div>
-      </section>
+        <div class="hero-decor" aria-hidden="true"></div>
+      </div>
     </main>
 
     <!-- Footer -->
@@ -363,6 +275,21 @@
         // Components are auto-initialized in their respective files
         console.log('Matthew Radio homepage loaded successfully');
       });
+
+      // Reveal elements on scroll (respecting prefers-reduced-motion)
+      (function(){
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!prefersReduced && 'IntersectionObserver' in window) {
+          const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) entry.target.classList.add('in-view');
+            });
+          }, { threshold: 0.12 });
+          document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+        } else {
+          document.querySelectorAll('.reveal').forEach(el => el.classList.add('in-view'));
+        }
+      })();
     </script>
   </body>
 </html>

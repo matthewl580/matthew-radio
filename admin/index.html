@@ -74,67 +74,70 @@
     </script>
 
     <!-- Admin Content -->
-    <div class="admin-container">
-      <div class="admin-header">
-        <h1 class="admin-title">Admin Dashboard</h1>
-        <p class="admin-subtitle">Manage your radio station content and settings</p>
-      </div>
+      <div class="panel-grid">
+      <div class="admin-container">
+        <div class="admin-header">
+          <h1 class="admin-title">Admin Dashboard</h1>
+          <p class="admin-subtitle">Manage your radio station content and settings</p>
 
-      <!-- Radio Station Management -->
-      <div class="admin-section">
-        <h2>Radio Station Management</h2>
-        <div id="radioStationList" class="stations-list"></div>
-      </div>
+        <!-- Radio Station Management -->
+        <div class="admin-section">
+          <h2>Radio Station Management</h2>
+          <div id="radioStationList" class="stations-list"></div>
+        </div>
 
-      <!-- Add New Track Form -->
-      <div class="admin-section">
-        <div id="addNewTrackForm" class="form-container">
-          <h2 class="form-title">
-            <span class="material-symbols-rounded">library_add</span>
-            Add New Track
-          </h2>
-          
-          <div class="form-group">
-            <label for="trackTitleInput">
-              <span class="material-symbols-rounded">title</span>
-              Track Title
-            </label>
-            <div class="input-container">
-              <span class="material-symbols-rounded">music_note</span>
-              <input name="title" type="text" id="trackTitleInput" placeholder="Enter track title" />
-            </div>
-          </div>
-          
-          <div class="form-group">
-            <label for="trackAuthorInput">
-              <span class="material-symbols-rounded">artist</span>
-              Artist/Author
-            </label>
-            <div class="input-container">
-              <span class="material-symbols-rounded">person</span>
-              <input name="author" type="text" id="trackAuthorInput" placeholder="Enter artist name" />
-            </div>
-          </div>
-          
-          <div class="form-group">
-            <label for="trackFileInput">
-              <span class="material-symbols-rounded">upload_file</span>
-              MP3 File
-            </label>
-            <div class="input-container">
-              <span class="material-symbols-rounded">attach_file</span>
-              <input type="file" id="trackFileInput" name="trackFileInput" accept="audio/mp3" />
-            </div>
-          </div>
-          
-          <div class="form-actions">
-            <button id="submit" type="submit" class="submit-button">
-              <span class="material-symbols-rounded">done</span>
+        <!-- Add New Track Form -->
+        <div class="admin-section">
+          <div id="addNewTrackForm" class="form-container">
+            <h2 class="form-title">
+              <span class="material-symbols-rounded">library_add</span>
               Add New Track
-            </button>
+            </h2>
+            
+            <div class="form-group">
+              <label for="trackTitleInput">
+                <span class="material-symbols-rounded">title</span>
+                Track Title
+              </label>
+              <div class="input-container">
+                <span class="material-symbols-rounded">music_note</span>
+                <input name="title" type="text" id="trackTitleInput" placeholder="Enter track title" />
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="trackAuthorInput">
+                <span class="material-symbols-rounded">artist</span>
+                Artist/Author
+              </label>
+              <div class="input-container">
+                <span class="material-symbols-rounded">person</span>
+                <input name="author" type="text" id="trackAuthorInput" placeholder="Enter artist name" />
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="trackFileInput">
+                <span class="material-symbols-rounded">upload_file</span>
+                MP3 File
+              </label>
+              <div class="input-container">
+                <span class="material-symbols-rounded">attach_file</span>
+                <input type="file" id="trackFileInput" name="trackFileInput" accept="audio/mp3" />
+              </div>
+            </div>
+            
+            <div class="form-actions">
+              <button id="submit" type="submit" class="submit-button">
+                <span class="material-symbols-rounded">done</span>
+                Add New Track
+              </button>
+            </div>
           </div>
         </div>
       </div>
+      </div>
+      <div class="hero-decor" aria-hidden="true"></div>
     </div>
 
     <audio id="trackDurationExtractor"></audio>
