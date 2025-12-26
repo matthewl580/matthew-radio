@@ -26,6 +26,7 @@
     />
     <link rel="icon" href="https://cdn.glitch.global/f81e375a-f3b2-430f-9115-3f352b74f21b/MIR Logo.png?v=1716468410227" />
     <script src="/play/script.js" defer></script>
+    <script src="/global/nav.js" defer></script>
     <style>
       /* Strong, page-scoped overrides to make the Now Playing bar compact and highly visible */
       .now-playing-section{padding:6px 8px !important;}
@@ -87,29 +88,7 @@
     </style>
   </head>
   <body>
-    <nav id="navBar" aria-label="Main navigation">
-      <div id="logoBar">
-        <div id="logomarkContainer">
-          <img
-            id="logomark"
-            src="https://cdn.glitch.global/f81e375a-f3b2-430f-9115-3f352b74f21b/MIR Logo.png?v=1716468410227"
-            alt="Matthew Radio Logo"
-          />
-        </div>
-        <div id="brandWordMark">Matthew Radio</div>
-      </div>
-
-      <button id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navBarOptions" class="nav-toggle">
-        <span class="material-symbols-rounded">menu</span>
-      </button>
-
-      <div id="navBarOptions" role="menubar">
-        <a href="/" class="navBarOption nav-link" role="menuitem"><span class="material-symbols-rounded">home</span><span class="optionText">Home</span></a>
-        <a href="/play" class="navBarOption nav-link" role="menuitem"><span class="material-symbols-rounded">play_arrow</span><span class="optionText">Play</span></a>
-        <a href="/join" class="navBarOption nav-link" role="menuitem"><span class="material-symbols-rounded">emoji_people</span><span class="optionText">Join</span></a>
-        <a href="/donate" class="navBarOption nav-link" role="menuitem"><span class="material-symbols-rounded">volunteer_activism</span><span class="optionText">Donate</span></a>
-      </div>
-    </nav>
+    <!-- Navigation injected by /global/nav.js -->
 
     <!-- Main Content -->
       <div class="panel-grid">
@@ -123,7 +102,11 @@
         <div id="substationList" class="stations-grid"></div>
       </div>
 
-      <div id="nowPlayingUI" class="now-playing-section">
+     
+      <div class="hero-decor" aria-hidden="true"></div>
+      </div>
+    </div>
+ <div id="nowPlayingUI" class="now-playing-section">
         <div class="now-playing-card now-playing-compact">
           <div class="top-row">
             <div class="title-wrap">
@@ -144,31 +127,9 @@
           </div>
         </div>
       </div>
-      <div class="hero-decor" aria-hidden="true"></div>
-      </div>
-    </div>
-
     <audio id="audio" src=""></audio>
 
-    <script>
-      // Mobile nav toggle (copied from root for consistent behavior)
-      (function(){
-        const toggle = document.getElementById('navToggle');
-        const menu = document.getElementById('navBarOptions');
-        if (!toggle || !menu) return;
-        toggle.addEventListener('click', () => {
-          const open = menu.classList.toggle('open');
-          toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-        });
-        // Close menu when clicking outside on small screens
-        document.addEventListener('click', (e) => {
-          if (!menu.classList.contains('open')) return;
-          if (e.target.closest('#navBar')) return;
-          menu.classList.remove('open');
-          toggle.setAttribute('aria-expanded', 'false');
-        });
-      })();
-    </script>
+    <!-- Navigation behavior provided by /global/nav.js -->
 
     <footer id="copyrightText">
       <p>Copyright Matthew Internet Radio. All rights reserved.</p>

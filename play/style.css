@@ -221,7 +221,6 @@
   z-index: 100;
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
-  animation: slideInUp 0.6s ease-out;
 }
 
 .now-playing-section h2 {

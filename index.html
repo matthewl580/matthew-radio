@@ -42,6 +42,8 @@
     <link rel="stylesheet" href="/style.css" />
     <link rel="stylesheet" href="/landing-style.css" />
 
+    <script src="/global/nav.js" defer></script>
+
     <!-- Fonts -->
     <link
       href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
@@ -60,46 +62,7 @@
     <!-- Skip to main content link for accessibility -->
     <a href="#main-content" class="skip-link sr-only">Skip to main content</a>
 
-    <!-- Header with Navigation -->
-    <header role="banner">
-      <nav id="navBar" aria-label="Main navigation">
-        <div id="logoBar">
-          <div id="logomarkContainer">
-            <img
-              id="logomark"
-              src="https://cdn.glitch.global/f81e375a-f3b2-430f-9115-3f352b74f21b/MIR Logo.png?v=1716468410227"
-              alt="Matthew Radio Logo"
-              loading="eager"
-            />
-          </div>
-          <div id="brandWordMark">Matthew Radio</div>
-        </div>
-
-        <button id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navBarOptions" class="nav-toggle btn-ripple">
-          <span class="material-symbols-rounded" aria-hidden="true">menu</span>
-        </button>
-
-        <div id="navBarOptions" role="menubar">
-          <a href="/" class="navBarOption nav-link" role="menuitem" aria-current="page">
-            <span class="material-symbols-rounded" aria-hidden="true">home</span>
-            <span class="optionText">Home</span>
-          </a>
-          <a href="/play" class="navBarOption nav-link" role="menuitem">
-            <span class="material-symbols-rounded" aria-hidden="true">play_arrow</span>
-            <span class="optionText">Play</span>
-          </a>
-          <a href="/join" class="navBarOption nav-link" role="menuitem">
-            <span class="material-symbols-rounded" aria-hidden="true">emoji_people</span>
-            <span class="optionText">Join</span>
-          </a>
-         
-          <a href="/donate" class="navBarOption nav-link" role="menuitem">
-            <span class="material-symbols-rounded" aria-hidden="true">volunteer_activism</span>
-            <span class="optionText">Donate</span>
-          </a>
-        </div>
-      </nav>
-    </header>
+    <!-- Navigation injected by /global/nav.js -->
 
     <!-- Main Content -->
     <main id="main-content" role="main">
@@ -167,76 +130,7 @@
       // Initialize current year in footer
       document.getElementById('currentYear').textContent = new Date().getFullYear();
 
-      // Enhanced mobile navigation with accessibility
-      (function(){
-        const toggle = document.getElementById('navToggle');
-        const menu = document.getElementById('navBarOptions');
-
-        if (!toggle || !menu) return;
-
-        function toggleMenu() {
-          const isOpen = menu.classList.toggle('open');
-          toggle.setAttribute('aria-expanded', isOpen);
-
-          // Announce to screen readers
-          if (window.accessibilityManager) {
-            window.accessibilityManager.announce(
-              isOpen ? 'Navigation menu opened' : 'Navigation menu closed',
-              'assertive'
-            );
-          }
-
-          // Focus management
-          if (isOpen) {
-            const firstLink = menu.querySelector('a');
-            if (firstLink) firstLink.focus();
-          }
-        }
-
-        toggle.addEventListener('click', toggleMenu);
-
-        // Close menu when clicking outside on small screens
-        document.addEventListener('click', (e) => {
-          if (!menu.classList.contains('open')) return;
-          if (e.target.closest('#navBar')) return;
-          toggleMenu();
-        });
-
-        // Close menu on escape key
-        document.addEventListener('keydown', (e) => {
-          if (e.key === 'Escape' && menu.classList.contains('open')) {
-            toggleMenu();
-            toggle.focus();
-          }
-        });
-
-        // Keyboard navigation for menu items
-        menu.addEventListener('keydown', (e) => {
-          const items = Array.from(menu.querySelectorAll('a[role="menuitem"]'));
-          const currentIndex = items.indexOf(document.activeElement);
-
-          switch(e.key) {
-            case 'ArrowDown':
-              e.preventDefault();
-              const nextIndex = (currentIndex + 1) % items.length;
-              items[nextIndex].focus();
-              break;
-            case 'ArrowUp':
-              e.preventDefault();
-              const prevIndex = currentIndex <= 0 ? items.length - 1 : currentIndex - 1;
-              items[prevIndex].focus();
-              break;
-            case 'Home':
-              e.preventDefault();
-              items[0].focus();
-              break;
-            case 'End':
-              e.preventDefault();
-              items[items.length - 1].focus();
-              break;
-          }
-        });
-      })();
+      // Navigation behavior handled by /global/nav.js
 
       // Smooth scrolling for anchor links
       document.querySelectorAll('a[href^="#"]').forEach(anchor => {

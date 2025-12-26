@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="/global/styles.css" />
     <link rel="stylesheet" href="/style.css" />
     <link rel="stylesheet" href="/join/style.css" />
+    <script src="/global/nav.js" defer></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
       rel="stylesheet"
@@ -27,48 +28,7 @@
     <link rel="icon" href="https://cdn.glitch.global/f81e375a-f3b2-430f-9115-3f352b74f21b/MIR Logo.png?v=1716468410227" />
   </head>
   <body>
-    <nav id="navBar" aria-label="Main navigation">
-      <div id="logoBar">
-        <div id="logomarkContainer">
-          <img
-            id="logomark"
-            src="https://cdn.glitch.global/f81e375a-f3b2-430f-9115-3f352b74f21b/MIR Logo.png?v=1716468410227"
-            alt="Matthew Radio Logo"
-          />
-        </div>
-        <div id="brandWordMark">Matthew Radio</div>
-      </div>
-
-      <button id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navBarOptions" class="nav-toggle">
-        <span class="material-symbols-rounded">menu</span>
-      </button>
-
-      <div id="navBarOptions" role="menubar">
-        <a href="/" class="navBarOption nav-link" role="menuitem"><span class="material-symbols-rounded">home</span><span class="optionText">Home</span></a>
-        <a href="/play" class="navBarOption nav-link" role="menuitem"><span class="material-symbols-rounded">play_arrow</span><span class="optionText">Play</span></a>
-        <a href="/join" class="navBarOption nav-link" role="menuitem"><span class="material-symbols-rounded">emoji_people</span><span class="optionText">Join</span></a>
-        <a href="/donate" class="navBarOption nav-link" role="menuitem"><span class="material-symbols-rounded">volunteer_activism</span><span class="optionText">Donate</span></a>
-      </div>
-    </nav>
-
-    <script>
-      // Mobile nav toggle
-      (function(){
-        const toggle = document.getElementById('navToggle');
-        const menu = document.getElementById('navBarOptions');
-        if (!toggle || !menu) return;
-        toggle.addEventListener('click', () => {
-          const open = menu.classList.toggle('open');
-          toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-        });
-        document.addEventListener('click', (e) => {
-          if (!menu.classList.contains('open')) return;
-          if (e.target.closest('#navBar')) return;
-          menu.classList.remove('open');
-          toggle.setAttribute('aria-expanded', 'false');
-        });
-      })();
-    </script>
+    <!-- Navigation injected by /global/nav.js -->
 
       <div class="panel-grid">
         <!-- Join Us Hero Section -->
