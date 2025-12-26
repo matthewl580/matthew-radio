@@ -19,18 +19,27 @@ audioElement.onplay = function() {
     isPlaying = true;
     updatePlayPauseButton();
     startVisualizer();
+    // mark UI as playing
+    const nowUI = document.getElementById('nowPlayingUI');
+    if (nowUI) nowUI.classList.add('is-playing');
 };
 
 audioElement.onpause = function() {
     isPlaying = false;
     updatePlayPauseButton();
     stopVisualizer();
+    // mark UI as paused
+    const nowUI = document.getElementById('nowPlayingUI');
+    if (nowUI) nowUI.classList.remove('is-playing');
 };
 
 audioElement.onended = function() {
     isPlaying = false;
     updatePlayPauseButton();
     stopVisualizer();
+    // remove playing state
+    const nowUI = document.getElementById('nowPlayingUI');
+    if (nowUI) nowUI.classList.remove('is-playing');
     console.log("Segment ended for current audio element.");
     let currentStationName = document.getElementById("trackName").dataset.station;
 
@@ -67,6 +76,14 @@ playPauseBtn.addEventListener('click', function() {
         }
     }
 });
+
+// Show the now-playing UI with entrance when a station is selected
+function showNowPlayingUI() {
+    const nowUI = document.getElementById('nowPlayingUI');
+    if (!nowUI) return;
+    // add visible class after a microtask to allow CSS transition
+    requestAnimationFrame(() => nowUI.classList.add('visible'));
+}
 
 stopBtn.addEventListener('click', function() {
     audioElement.pause();

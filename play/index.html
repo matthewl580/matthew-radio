@@ -44,6 +44,46 @@
       .now-playing-compact .controls{display:flex;gap:6px;align-items:center;margin-left:8px}
       /* make sure it sits above page content */
       .now-playing-section{z-index:120 !important}
+
+      /* Fixed/sticky now-playing near bottom */
+      #nowPlayingUI {
+        position: fixed;
+        left: 50%;
+        transform: translateX(-50%) translateY(24px);
+        bottom: 22px;
+        width: min(1080px, calc(100% - 40px));
+        max-width: 1080px;
+        box-shadow: 0 18px 60px rgba(11,3,38,0.6);
+        border-radius: 14px;
+        backdrop-filter: blur(6px) saturate(1.05);
+        transition: transform 420ms cubic-bezier(.2,.9,.2,1), opacity 320ms ease;
+        opacity: 0;
+        pointer-events: auto;
+      }
+
+      /* entrance when visible */
+      #nowPlayingUI.visible { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+      /* playing micro-animation */
+      #nowPlayingUI.is-playing .now-playing-card { animation: pulse-glow 2.6s ease-in-out infinite; }
+
+      @keyframes pulse-glow {
+        0% { box-shadow: 0 12px 30px rgba(124,77,255,0.08); transform: translateY(0); }
+        50% { box-shadow: 0 22px 60px rgba(124,77,255,0.14); transform: translateY(-3px); }
+        100% { box-shadow: 0 12px 30px rgba(124,77,255,0.08); transform: translateY(0); }
+      }
+
+      /* subtle hover scale for controls */
+      .now-playing-card .control-btn:hover { transform: scale(1.06); }
+
+      /* animate the hero decor slightly while playing */
+      .hero-decor { transition: transform 900ms ease-in-out; }
+      #nowPlayingUI.is-playing ~ .hero-decor { transform: translateY(-6px) scale(1.02) rotate(-2deg); }
+
+      @media (max-width: 768px) {
+        #nowPlayingUI{left:16px;right:16px;transform:none;bottom:14px;width:calc(100% - 32px)}
+        #nowPlayingUI.visible{transform:none}
+      }
     </style>
   </head>
   <body>
